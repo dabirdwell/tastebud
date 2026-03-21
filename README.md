@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TasteBud
+
+**See Flavor. Balance Taste. Create Magic.**
+
+TasteBud is a gamified culinary education platform — the third app in the Brain Mastery series. It makes flavor theory visible, interactive, and playful, transforming cooking from recipe-following into intuitive creation through AI mentorship and an interactive Flavor Map.
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** Supabase (PostgreSQL + Auth + Realtime)
+- **AI:** Claude Sonnet (mentors) + Claude Haiku (scoring, recognition)
+- **Payments:** Stripe ($4.99/mo Pro tier)
+- **Visualization:** SVG/Canvas Flavor Map (Three.js + D3.js planned)
+- **State:** Zustand (planned)
+- **Hosting:** Vercel
+
+## Core Features
+
+- **Flavor Map** — Interactive 2D/2.5D canvas with six taste axes (Sweet, Salty, Umami, Sour, Bitter, Spicy). Drag ingredients, see molecular connections and balance in real time.
+- **AI Culinary Mentors** — Learn from personas inspired by Julia Child, Jacques Pépin, Anthony Bourdain, Ferran Adrià, and Massimo Bottura.
+- **Gamified Progression** — Rank system (Seed → Master), XP, streaks, achievements, and "Tasting" rank tests.
+- **Challenge Mode** — Mystery Basket, Flavor Fix, Speed Pairing, Cuisine Translator, Substitution Sprint.
+- **Ingredient Library** — 500+ ingredients at MVP, each with six-axis flavor vectors, aroma compounds, cultural context, and transformation data.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── globals.css          # Dark warm theme (bg #0a0a08, copper accents)
+│   ├── layout.tsx           # Root layout with Geist fonts
+│   └── page.tsx             # Landing page
+└── components/
+    └── FlavorWheel.tsx      # Interactive SVG flavor radar chart
+```
 
-## Learn More
+## Design Language
 
-To learn more about Next.js, take a look at the following resources:
+- **Dark warm base** — `#0a0a08` background
+- **Copper accents** — `#b87333` primary, `#d4956b` light, `#8b5a2b` dark
+- **Saffron/amber highlights** — `#f4c430`, `#c8912e`
+- **Flavor axis colors** — Sweet (pink), Salty (white), Umami (deep red), Sour (yellow-green), Bitter (dark green), Spicy (orange)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Pricing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Feature | Free | Pro ($4.99/mo) |
+|---------|------|----------------|
+| Flavor Map | 3 ingredients | Unlimited |
+| Ingredient Library | 200 | 2,000+ |
+| AI Mentor | Julia Child | All 5 mentors |
+| Courses | Module 1 | All modules |
+| Challenges | 1/day | Unlimited |
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary — Fawkes
