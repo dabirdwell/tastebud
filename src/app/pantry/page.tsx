@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import RecipeExplorer from "@/components/RecipeExplorer";
+import PantryMode from "@/components/PantryMode";
 
 export const metadata: Metadata = {
-  title: "Recipes — TasteBud",
+  title: "Pantry Mode — TasteBud",
   description:
-    "Explore recipes from around the world and see how their ingredients create unique flavor profiles.",
+    "Select the ingredients you have on hand and discover recipes you can make with your pantry.",
 };
 
-export default function RecipesPage() {
+export default function PantryPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Navigation */}
@@ -24,10 +24,10 @@ export default function RecipesPage() {
             <a href="/#flavor-map" className="hover:text-copper transition-colors">
               Flavor Map
             </a>
-            <a href="/recipes" className="text-copper font-medium">
+            <a href="/recipes" className="hover:text-copper transition-colors">
               Recipes
             </a>
-            <a href="/pantry" className="hover:text-copper transition-colors">
+            <a href="/pantry" className="text-copper font-medium">
               Pantry
             </a>
             <a href="/#mentors" className="hover:text-copper transition-colors">
@@ -45,7 +45,7 @@ export default function RecipesPage() {
 
       {/* Content */}
       <main className="flex-1">
-        <RecipeExplorer />
+        <PantryMode />
       </main>
 
       {/* Footer */}

@@ -116,6 +116,9 @@ export default function Home() {
             <a href="/recipes" className="hover:text-copper transition-colors">
               Recipes
             </a>
+            <a href="/pantry" className="hover:text-copper transition-colors">
+              Pantry
+            </a>
             <a href="#mentors" className="hover:text-copper transition-colors">
               Mentors
             </a>
