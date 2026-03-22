@@ -1,4 +1,5 @@
 import FlavorMap from "@/components/FlavorMap";
+import MentorChat from "@/components/MentorChat";
 
 const FEATURES = [
   {
@@ -323,6 +324,11 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Mentor Chat */}
+      <section id="mentor-chat" className="py-20 px-6">
+        <MentorChat />
       </section>
 
       {/* Pricing */}
