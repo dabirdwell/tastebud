@@ -1,4 +1,4 @@
-import FlavorWheel from "@/components/FlavorWheel";
+import FlavorMap from "@/components/FlavorMap";
 
 const FEATURES = [
   {
@@ -159,49 +159,12 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Flavor Map Demo */}
+      {/* Interactive Flavor Map */}
       <section
         id="flavor-map"
         className="py-20 px-6 bg-surface border-y border-border"
       >
-        <div className="mx-auto max-w-6xl">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold">
-                The <span className="text-copper">Flavor Map</span>
-              </h2>
-              <p className="text-foreground/60 leading-relaxed max-w-lg">
-                Every ingredient has a six-dimensional flavor profile. Drag
-                ingredients onto the map and watch relationships emerge — shared
-                aroma compounds, harmony, discord, and balance become visible in
-                real time.
-              </p>
-              <div className="grid grid-cols-2 gap-3 max-w-md">
-                {[
-                  { label: "Node size", meaning: "Flavor intensity" },
-                  { label: "Color shift", meaning: "Balance state" },
-                  { label: "Connections", meaning: "Shared compounds" },
-                  { label: "Glow/pulse", meaning: "Ingredient synergy" },
-                ].map((signal) => (
-                  <div
-                    key={signal.label}
-                    className="rounded-lg bg-surface-light border border-border p-3"
-                  >
-                    <p className="text-xs text-copper font-medium">
-                      {signal.label}
-                    </p>
-                    <p className="text-sm text-foreground/70">
-                      {signal.meaning}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex-shrink-0">
-              <FlavorWheel size={340} />
-            </div>
-          </div>
-        </div>
+        <FlavorMap />
       </section>
 
       {/* Features */}
