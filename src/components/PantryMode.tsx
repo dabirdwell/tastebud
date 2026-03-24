@@ -40,6 +40,60 @@ function ingredientMatches(pantryName: string, recipeName: string): boolean {
   return aWords.some((w) => bWords.some((bw) => bw.includes(w) || w.includes(bw)));
 }
 
+/* ── substitution map ─────────────────────────────────────────── */
+
+const SUBSTITUTIONS: Record<string, string[]> = {
+  "Rice Noodles": ["glass noodles", "thin spaghetti"],
+  "Tamarind Paste": ["lime juice + brown sugar"],
+  "Fish Sauce": ["soy sauce + lime juice", "Worcestershire sauce"],
+  "Palm Sugar": ["brown sugar", "honey"],
+  "Pecorino Romano": ["Parmesan", "aged Asiago"],
+  "Tonnarelli Pasta": ["spaghetti", "bucatini"],
+  "Chilhuacle Negro": ["ancho chili + guajillo"],
+  "Mexican Chocolate": ["dark chocolate + cinnamon"],
+  "Chashu Pork": ["braised pork belly", "slow-cooked pork shoulder"],
+  "White Miso": ["red miso (sweeter result)", "soy sauce + butter"],
+  "Berbere Spice": ["paprika + cayenne + cumin + cinnamon"],
+  "Niter Kibbeh": ["ghee + turmeric + fenugreek", "clarified butter"],
+  "Gochugaru": ["crushed red pepper + paprika"],
+  "Kashmiri Chili": ["paprika + pinch of cayenne"],
+  "Fenugreek Leaves": ["celery leaves", "dried fenugreek (half amount)"],
+  "Garam Masala": ["allspice + cumin + coriander"],
+  "Green Curry Paste": ["serrano + basil + lemongrass paste"],
+  "Thai Basil": ["Italian basil + fresh mint"],
+  "Kaffir Lime Leaves": ["lime zest"],
+  "Saffron": ["turmeric + paprika (color, not flavor)"],
+  "Pastis": ["anise extract + vodka"],
+  "Herbes de Provence": ["thyme + oregano + rosemary"],
+  "Cotija Cheese": ["feta", "Parmesan"],
+  "Guajillo Chili": ["ancho chili", "New Mexico chili"],
+  "Ancho Chili": ["guajillo chili", "pasilla chili"],
+  "Paneer": ["firm tofu", "halloumi"],
+  "Amchur Powder": ["lemon juice", "tamarind paste"],
+  "Biryani Masala": ["garam masala + turmeric + cinnamon"],
+  "Mitmita Spice": ["cayenne + cardamom + clove"],
+  "Korerima": ["cardamom"],
+  "Ayib Cheese": ["ricotta", "cottage cheese"],
+  "Dashi": ["vegetable broth + soy sauce"],
+  "Bonito Flakes": ["kombu + dried shiitake"],
+  "Kewpie Mayo": ["mayo + rice vinegar + pinch of sugar"],
+  "Okonomiyaki Sauce": ["Worcestershire + ketchup + soy sauce"],
+  "Wasabi": ["horseradish + mustard"],
+  "Nori": ["toasted sesame seeds (for garnish)"],
+  "Rouille": ["aioli + cayenne + smoked paprika"],
+  "Dried Shrimp": ["shrimp paste", "extra fish sauce"],
+  "Thai Chilies": ["serrano peppers", "habanero (less, hotter)"],
+  "Green Papaya": ["jicama", "kohlrabi"],
+  "Thai Eggplant": ["regular eggplant (cubed small)"],
+  "Hominy": ["white beans (different texture)"],
+  "Red Lentils": ["yellow lentils", "split peas"],
+  "Collard Greens": ["kale", "Swiss chard"],
+  "Pork Bone Broth": ["chicken broth + soy sauce"],
+  "Anchovy Stock": ["dashi", "fish sauce + water"],
+  "Coriander Powder": ["cumin (half amount)"],
+  "Lard": ["vegetable shortening", "butter"],
+};
+
 interface RecipeMatch {
   recipe: Recipe;
   profile: FlavorProfile;
@@ -244,6 +298,14 @@ export default function PantryMode() {
 
   const matches = useMemo(() => matchRecipes(selected), [selected]);
 
+  // Smart suggestions: recipes that are close (1-3 missing ingredients)
+  const smartSuggestions = useMemo(() => {
+    if (selected.size === 0) return [];
+    return matches
+      .filter((m) => m.missing.length >= 1 && m.missing.length <= 3 && m.percentage >= 40)
+      .slice(0, 3);
+  }, [matches, selected.size]);
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-12">
       {/* Header */}
@@ -378,6 +440,63 @@ export default function PantryMode() {
             </div>
           )}
 
+          {/* Smart suggestions */}
+          {smartSuggestions.length > 0 && (
+            <div className="rounded-2xl border border-copper/20 bg-copper/5 p-4 sm:p-6">
+              <h2 className="text-lg font-semibold text-copper mb-1 flex items-center gap-2">
+                <span className="text-base">💡</span> Almost There
+              </h2>
+              <p className="text-foreground/40 text-xs mb-4">
+                You&apos;re just a few ingredients away from these recipes
+              </p>
+              <div className="space-y-3">
+                {smartSuggestions.map((m) => {
+                  const pantryNames = selectedIngredients.map((i) => i.name);
+                  const matchedDisplay = m.matched.slice(0, 3).join(", ");
+                  return (
+                    <div key={m.recipe.id} className="rounded-xl bg-background/60 border border-border p-3 sm:p-4">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div>
+                          <span className="font-semibold text-foreground text-sm">{m.recipe.name}</span>
+                          <span className="text-xs text-foreground/30 ml-2">{m.recipe.cuisine}</span>
+                        </div>
+                        <span className="shrink-0 text-xs font-medium text-copper-light bg-copper/15 px-2 py-0.5 rounded-full">
+                          {m.missing.length} away
+                        </span>
+                      </div>
+                      <p className="text-xs text-foreground/50 mb-2">
+                        You have {matchedDisplay}
+                        {m.matched.length > 3 ? ` + ${m.matched.length - 3} more` : ""}
+                        {" — "}
+                        {m.missing.length === 1
+                          ? "just 1 ingredient to go!"
+                          : `only ${m.missing.length} ingredients to go!`}
+                      </p>
+                      <div className="space-y-1.5">
+                        {m.missing.map((name) => {
+                          const subs = SUBSTITUTIONS[name];
+                          return (
+                            <div key={name} className="flex items-start gap-2 text-xs">
+                              <span className="text-red-400 mt-0.5 shrink-0">✕</span>
+                              <div>
+                                <span className="text-foreground/70 font-medium">{name}</span>
+                                {subs && subs.length > 0 && (
+                                  <span className="text-foreground/40 ml-1">
+                                    — try {subs.slice(0, 2).join(" or ")} instead
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Recipe matches */}
           <div className="rounded-2xl border border-border bg-surface p-4 sm:p-6">
             <h2 className="text-lg font-semibold text-copper mb-1">Recipe Matches</h2>
@@ -478,12 +597,15 @@ export default function PantryMode() {
                                         ? "bg-green-500/10 text-green-400 border border-green-500/20"
                                         : "bg-red-500/10 text-red-400 border border-red-500/20"
                                     }`}
+                                    title={!have && SUBSTITUTIONS[ri.name] ? `Sub: ${SUBSTITUTIONS[ri.name].join(", ")}` : undefined}
                                   >
                                     <span>{ri.emoji}</span>
                                     <span>{ri.name}</span>
-                                    {!have && (
+                                    {!have && SUBSTITUTIONS[ri.name] ? (
+                                      <span className="text-[10px] opacity-60">→ {SUBSTITUTIONS[ri.name][0]}</span>
+                                    ) : !have ? (
                                       <span className="text-[10px] opacity-60">missing</span>
-                                    )}
+                                    ) : null}
                                   </span>
                                 );
                               })}

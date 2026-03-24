@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
-import PantryMode from "@/components/PantryMode";
+import FlavorScienceCards from "@/components/FlavorScienceCards";
 
 export const metadata: Metadata = {
-  title: "Pantry Mode — TasteBud",
+  title: "Learn — Flavor Science — TasteBud",
   description:
-    "Select the ingredients you have on hand and discover recipes you can make with your pantry.",
+    "Discover the science behind flavor with 10 interactive cards covering the Maillard reaction, umami, capsaicin, and more.",
 };
 
-export default function PantryPage() {
+export default function LearnPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Nav active="Pantry" />
+      <Nav active="Learn" />
 
       <main className="flex-1">
-        <PantryMode />
+        <FlavorScienceCards />
       </main>
 
       <footer className="border-t border-border py-12 px-6">

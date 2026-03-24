@@ -1,3 +1,4 @@
+import Nav from "@/components/Nav";
 import FlavorMap from "@/components/FlavorMap";
 import MentorChat from "@/components/MentorChat";
 
@@ -97,40 +98,7 @@ const PRICING = [
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-sm">
-        <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold tracking-tight text-copper">
-              TasteBud
-            </span>
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm text-foreground/70">
-            <a href="#features" className="hover:text-copper transition-colors">
-              Features
-            </a>
-            <a href="#flavor-map" className="hover:text-copper transition-colors">
-              Flavor Map
-            </a>
-            <a href="/recipes" className="hover:text-copper transition-colors">
-              Recipes
-            </a>
-            <a href="/pantry" className="hover:text-copper transition-colors">
-              Pantry
-            </a>
-            <a href="#mentors" className="hover:text-copper transition-colors">
-              Mentors
-            </a>
-            <a href="#pricing" className="hover:text-copper transition-colors">
-              Pricing
-            </a>
-          </div>
-          <button className="rounded-full bg-copper px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-copper-light">
-            Join Waitlist
-          </button>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center px-6 py-24 md:py-32 text-center">
