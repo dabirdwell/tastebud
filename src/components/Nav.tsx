@@ -6,6 +6,8 @@ const NAV_LINKS = [
   { href: "/#features", label: "Features" },
   { href: "/#flavor-map", label: "Flavor Map" },
   { href: "/recipes", label: "Recipes" },
+  { href: "/planner", label: "Planner" },
+  { href: "/shopping", label: "Shopping" },
   { href: "/pantry", label: "Pantry" },
   { href: "/learn", label: "Learn" },
   { href: "/#mentors", label: "Mentors" },
