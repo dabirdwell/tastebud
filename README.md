@@ -1,33 +1,40 @@
 # TasteBud
 
-**See Flavor. Balance Taste. Create Magic.**
+**Explore Flavor, Learn to Cook.**
 
-TasteBud is a gamified culinary education platform — the third app in the Brain Mastery series. It makes flavor theory visible, interactive, and playful, transforming cooking from recipe-following into intuitive creation through AI mentorship and an interactive Flavor Map.
+TasteBud is a gamified culinary education platform — part of the Brain Mastery series by Humanity & AI. It makes flavor theory visible, interactive, and playful, transforming cooking from recipe-following into intuitive creation through AI mentorship and an interactive Flavor Map.
+
+## Features
+
+- **Flavor Map** — Interactive 2D canvas with six taste axes (Sweet, Salty, Umami, Sour, Bitter, Spicy). Drag ingredients, see molecular connections and balance in real time.
+- **AI Culinary Mentors** — Chat with AI personas inspired by Julia Child, Jacques Pépin, and Anthony Bourdain. Each mentor has a distinct teaching philosophy and voice.
+- **Recipe Explorer** — Browse curated recipes from 10 global cuisines with flavor profiles and technique guides.
+- **Pantry Mode** — Enter what you have on hand and discover what you can cook, with smart ingredient matching and aggregate flavor analysis.
+- **Flavor Science** — Six-axis taste modeling mapped to real receptor categories and molecular compounds.
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 16 (App Router, Turbopack)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Database:** Supabase (PostgreSQL + Auth + Realtime)
-- **AI:** Claude Sonnet (mentors) + Claude Haiku (scoring, recognition)
-- **Payments:** Stripe ($4.99/mo Pro tier)
-- **Visualization:** SVG/Canvas Flavor Map (Three.js + D3.js planned)
-- **State:** Zustand (planned)
+- **Styling:** Tailwind CSS 4
+- **AI:** Anthropic Claude (AI mentor chat)
 - **Hosting:** Vercel
-
-## Core Features
-
-- **Flavor Map** — Interactive 2D/2.5D canvas with six taste axes (Sweet, Salty, Umami, Sour, Bitter, Spicy). Drag ingredients, see molecular connections and balance in real time.
-- **AI Culinary Mentors** — Learn from personas inspired by Julia Child, Jacques Pépin, Anthony Bourdain, Ferran Adrià, and Massimo Bottura.
-- **Gamified Progression** — Rank system (Seed → Master), XP, streaks, achievements, and "Tasting" rank tests.
-- **Challenge Mode** — Mystery Basket, Flavor Fix, Speed Pairing, Cuisine Translator, Substitution Sprint.
-- **Ingredient Library** — 500+ ingredients at MVP, each with six-axis flavor vectors, aroma compounds, cultural context, and transformation data.
 
 ## Getting Started
 
 ```bash
+# Clone the repo
+git clone <repo-url>
+cd tastebud
+
+# Install dependencies
 npm install
+
+# Set up environment variables
+cp .env.example .env
+# Add your ANTHROPIC_API_KEY to .env
+
+# Run the dev server
 npm run dev
 ```
 
@@ -38,29 +45,29 @@ Open [http://localhost:3000](http://localhost:3000).
 ```
 src/
 ├── app/
-│   ├── globals.css          # Dark warm theme (bg #0a0a08, copper accents)
-│   ├── layout.tsx           # Root layout with Geist fonts
-│   └── page.tsx             # Landing page
-└── components/
-    └── FlavorWheel.tsx      # Interactive SVG flavor radar chart
+│   ├── api/mentor/route.ts   # AI mentor chat API endpoint
+│   ├── globals.css            # Dark warm theme (bg #0a0a08, copper accents)
+│   ├── layout.tsx             # Root layout with Geist fonts
+│   ├── page.tsx               # Landing page
+│   ├── pantry/page.tsx        # Pantry Mode page
+│   └── recipes/page.tsx       # Recipe Explorer page
+├── components/
+│   ├── FlavorMap.tsx           # Interactive drag-and-drop flavor map
+│   ├── FlavorWheel.tsx         # SVG flavor radar chart
+│   ├── MentorChat.tsx          # AI mentor chat interface
+│   ├── PantryMode.tsx          # Pantry ingredient matcher
+│   └── RecipeExplorer.tsx      # Recipe browser with flavor profiles
+└── data/
+    ├── ingredients.ts          # Ingredient database with flavor vectors
+    ├── mentors.ts              # Mentor persona definitions
+    └── recipes.ts              # Recipe collection
 ```
 
-## Design Language
+## Environment Variables
 
-- **Dark warm base** — `#0a0a08` background
-- **Copper accents** — `#b87333` primary, `#d4956b` light, `#8b5a2b` dark
-- **Saffron/amber highlights** — `#f4c430`, `#c8912e`
-- **Flavor axis colors** — Sweet (pink), Salty (white), Umami (deep red), Sour (yellow-green), Bitter (dark green), Spicy (orange)
-
-## Pricing
-
-| Feature | Free | Pro ($4.99/mo) |
-|---------|------|----------------|
-| Flavor Map | 3 ingredients | Unlimited |
-| Ingredient Library | 200 | 2,000+ |
-| AI Mentor | Julia Child | All 5 mentors |
-| Courses | Module 1 | All modules |
-| Challenges | 1/day | Unlimited |
+| Variable | Description |
+|----------|-------------|
+| `ANTHROPIC_API_KEY` | API key for Claude AI mentor chat |
 
 ## License
 

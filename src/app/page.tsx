@@ -2,56 +2,36 @@ import Nav from "@/components/Nav";
 import FlavorMap from "@/components/FlavorMap";
 import MentorChat from "@/components/MentorChat";
 
-const FEATURES = [
+const FEATURE_CARDS = [
   {
-    title: "Interactive Flavor Map",
+    title: "Flavor Map",
     description:
-      "A first-of-its-kind 2D/2.5D canvas where flavor relationships become visible. Drag ingredients, see molecular connections, and learn why flavors work together — not just that they do.",
-    detail:
-      "Six axes — Sweet, Salty, Umami, Sour, Bitter, Spicy — mapped to real taste receptor categories. Every ingredient is a node with a six-dimensional flavor vector.",
+      "An interactive 2D canvas where flavor relationships become visible. Drag ingredients, see molecular connections, and learn why flavors work together.",
+    icon: "🗺️",
   },
   {
-    title: "AI Culinary Mentors",
+    title: "AI Mentors",
     description:
-      "Learn from AI personas inspired by culinary legends. Each mentor has a distinct teaching philosophy, voice, and curriculum focus.",
-    mentors: [
-      {
-        name: "Julia Child",
-        focus: "Joy & Fearlessness",
-        tier: "Free",
-      },
-      {
-        name: "Jacques Pépin",
-        focus: "Classical Technique",
-        tier: "Pro",
-      },
-      {
-        name: "Anthony Bourdain",
-        focus: "Bold Exploration",
-        tier: "Pro",
-      },
-      {
-        name: "Ferran Adrià",
-        focus: "Molecular Innovation",
-        tier: "Pro",
-      },
-      {
-        name: "Massimo Bottura",
-        focus: "Tradition Meets Creativity",
-        tier: "Pro",
-      },
-    ],
+      "Learn from AI personas inspired by Julia Child, Jacques Pépin, and Anthony Bourdain. Each mentor has a distinct teaching philosophy and voice.",
+    icon: "🧑‍🍳",
   },
   {
-    title: "Gamified Progression",
+    title: "Recipe Explorer",
     description:
-      "Grow from Seed to Master through structured courses, challenges, and rank tests. Earn XP, maintain streaks, and unlock achievements — all tied to genuine culinary understanding.",
-    ranks: ["Seed", "Sprout", "Leaf", "Bloom", "Harvest", "Master"],
+      "Browse curated recipes from 10 global cuisines. See flavor profiles, ingredient breakdowns, and technique guides for every dish.",
+    icon: "📖",
   },
   {
-    title: "Challenge Mode",
+    title: "Pantry Mode",
     description:
-      'Chopped-style creative problem-solving. Mystery Basket, Flavor Fix, Speed Pairing, Cuisine Translator, and Substitution Sprint — each designed to sharpen your flavor intuition.',
+      "Enter what you have on hand and discover what you can cook. Smart ingredient matching with aggregate flavor profile analysis.",
+    icon: "🥘",
+  },
+  {
+    title: "Flavor Science",
+    description:
+      "Understand the six axes of taste — Sweet, Salty, Umami, Sour, Bitter, Spicy — mapped to real taste receptor categories and molecular compounds.",
+    icon: "🔬",
   },
 ];
 
@@ -107,10 +87,10 @@ export default function Home() {
           Brain Mastery Series
         </p>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl leading-tight">
-          See Flavor.{" "}
-          <span className="text-copper">Balance Taste.</span>
+          TasteBud —{" "}
+          <span className="text-copper">Explore Flavor,</span>
           <br />
-          Create Magic.
+          Learn to Cook
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-foreground/60 leading-relaxed">
           TasteBud transforms cooking from recipe-following into intuitive
@@ -119,14 +99,17 @@ export default function Home() {
           real understanding.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4">
-          <button className="rounded-full bg-copper px-8 py-3 text-base font-semibold text-background transition-colors hover:bg-copper-light">
-            Start Learning — Free
-          </button>
           <a
             href="#flavor-map"
+            className="rounded-full bg-copper px-8 py-3 text-base font-semibold text-background transition-colors hover:bg-copper-light"
+          >
+            Start Exploring
+          </a>
+          <a
+            href="/recipes"
             className="rounded-full border border-border px-8 py-3 text-base font-medium transition-colors hover:bg-surface-light"
           >
-            See the Flavor Map
+            Browse Recipes
           </a>
         </div>
         <p className="mt-6 text-xs text-foreground/40">
@@ -153,74 +136,19 @@ export default function Home() {
             flavor. TasteBud bridges the gap between molecular food science and
             your kitchen.
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            {FEATURES.map((feature) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURE_CARDS.map((feature) => (
               <div
                 key={feature.title}
                 className="rounded-xl border border-border bg-surface p-8 hover:border-copper/30 transition-colors"
               >
+                <span className="text-3xl mb-4 block">{feature.icon}</span>
                 <h3 className="text-xl font-semibold text-copper mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-foreground/60 leading-relaxed mb-4">
+                <p className="text-foreground/60 leading-relaxed">
                   {feature.description}
                 </p>
-                {feature.mentors && (
-                  <div className="space-y-2">
-                    {feature.mentors.map((mentor) => (
-                      <div
-                        key={mentor.name}
-                        className="flex items-center justify-between rounded-lg bg-surface-light px-4 py-2 text-sm"
-                      >
-                        <span className="font-medium">{mentor.name}</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-foreground/40">
-                            {mentor.focus}
-                          </span>
-                          <span
-                            className={`text-xs px-2 py-0.5 rounded-full ${
-                              mentor.tier === "Free"
-                                ? "bg-copper/20 text-copper"
-                                : "bg-border text-foreground/50"
-                            }`}
-                          >
-                            {mentor.tier}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {feature.ranks && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {feature.ranks.map((rank, i) => (
-                      <span
-                        key={rank}
-                        className="text-xs px-3 py-1 rounded-full border border-border"
-                        style={{
-                          borderColor: [
-                            "#8b6914",
-                            "#90b860",
-                            "#3a9e3a",
-                            "#d4a017",
-                            "#c8912e",
-                            "#b87333",
-                          ][i],
-                          color: [
-                            "#8b6914",
-                            "#90b860",
-                            "#3a9e3a",
-                            "#d4a017",
-                            "#c8912e",
-                            "#b87333",
-                          ][i],
-                        }}
-                      >
-                        {rank}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -371,10 +299,10 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <span className="text-lg">🌱</span>
             <span className="font-bold text-copper">TasteBud</span>
-            <span className="text-foreground/30 text-sm ml-2">
-              Brain Mastery Series
-            </span>
           </div>
+          <p className="text-sm text-foreground/40">
+            A Brain Mastery app by Humanity &amp; AI
+          </p>
           <p className="text-sm text-foreground/30">
             &copy; 2026 Fawkes. All rights reserved.
           </p>
