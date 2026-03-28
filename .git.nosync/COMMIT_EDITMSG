@@ -1,7 +1,9 @@
-Add seasonal ingredient calendar
+Complete FlavorMap: interactive radar with cuisine matching
 
-12-month grid of peak-season ingredients for Oklahoma/Southern US climate
-with expandable month details, cooking notes, and a "What's in Season Now"
-hero section. Adds /seasonal route and nav link.
+Replace ingredient drag-and-drop FlavorMap with an interactive hexagonal
+radar chart where users drag points on 6 flavor axes (0-10 scale) to set
+their flavor preference profile. The resulting shape fills with a gradient
+fingerprint. Below the chart, 3 matching cuisines and 3 matching ingredients
+are suggested based on Euclidean distance. Profile persists in localStorage.
 
 Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>

@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { href: "/pantry", label: "Pantry" },
   { href: "/seasonal", label: "Seasonal" },
   { href: "/learn", label: "Learn" },
-  { href: "/#mentors", label: "Mentors" },
+  { href: "/mentors", label: "Mentors" },
 ];
 
 export default function Nav({ active }: { active?: string }) {
