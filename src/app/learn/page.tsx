@@ -5,7 +5,7 @@ import FlavorScienceCards from "@/components/FlavorScienceCards";
 export const metadata: Metadata = {
   title: "Learn — Flavor Science — TasteBud",
   description:
-    "Discover the science behind flavor with 10 interactive cards covering the Maillard reaction, umami, capsaicin, and more.",
+    "Discover the science behind flavor with 20 interactive cards covering chemistry, technique, pairing, and culture — from the Maillard reaction to regional flavor profiles.",
 };
 
 export default function LearnPage() {

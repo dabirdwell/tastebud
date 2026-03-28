@@ -224,4 +224,214 @@ export const FLAVOR_SCIENCE_CARDS: FlavorScienceCard[] = [
         "The salt creates a selective environment where Lactobacillus bacteria thrive. They convert sugars into lactic acid, creating the sour tang and complex flavors absent in the raw cucumber.",
     },
   },
+  {
+    id: "caramelization",
+    title: "Caramelization",
+    icon: "🍮",
+    category: "Chemistry",
+    headline: "Caramelization isn't browning — it's sugar breaking apart and rebuilding into hundreds of new molecules.",
+    explanation:
+      "When pure sugar is heated above 320°F (160°C), it undergoes pyrolysis: the sucrose molecules break apart into glucose and fructose, then fragment into hundreds of new compounds — diacetyl (buttery), furanones (caramel), and maltol (toasty). Unlike the Maillard reaction, no amino acids are needed — just sugar and heat. The color darkens through stages: clear → pale gold → amber → dark brown → black (burnt). Each stage has a distinct flavor profile, which is why a light caramel tastes different from a dark one.",
+    diagram: "caramelization",
+    tryThis: {
+      title: "The Sugar Stage Test",
+      steps: [
+        "Put 2 tablespoons of white sugar in a dry pan over medium heat.",
+        "Watch without stirring — it melts clear, then turns pale gold (light caramel).",
+        "Taste a tiny drop on parchment at pale gold — sweet and buttery.",
+        "Let it go to deep amber — now it's complex, bitter-sweet, and nutty.",
+      ],
+      whyItWorks:
+        "Each color stage represents different breakdown products. Light caramel has mostly diacetyl (butter). Dark caramel has furanones and bitter compounds. Same sugar, completely different flavors depending on temperature.",
+    },
+  },
+  {
+    id: "emulsification",
+    title: "Emulsification",
+    icon: "🥚",
+    category: "Chemistry",
+    headline: "Oil and water don't mix — unless a molecular peacekeeper forces them together.",
+    explanation:
+      "An emulsion is a stable mixture of two liquids that normally separate (oil and water). Emulsifiers like lecithin (in egg yolks) have a hydrophilic (water-loving) head and a hydrophobic (fat-loving) tail. They sit at the oil-water boundary, preventing droplets from merging. Mayonnaise is a classic emulsion: egg yolk lecithin suspends tiny oil droplets in lemon juice. Vinaigrettes, hollandaise, and even milk are all emulsions held together by molecular intermediaries.",
+    diagram: "emulsification",
+    tryThis: {
+      title: "The Mayo From Scratch Test",
+      steps: [
+        "Whisk an egg yolk with 1 tsp lemon juice — this is your water phase.",
+        "Very slowly drizzle in ½ cup oil, whisking constantly.",
+        "Watch it thicken into mayo — the yolk's lecithin traps oil droplets.",
+        "Now try oil + lemon juice without yolk — it separates in seconds.",
+      ],
+      whyItWorks:
+        "The egg yolk's lecithin molecules coat each tiny oil droplet, preventing them from merging. Without the emulsifier, oil and water separate by density in seconds.",
+    },
+  },
+  {
+    id: "scoville-scale",
+    title: "The Scoville Scale",
+    icon: "🌡️",
+    category: "Chemistry",
+    headline: "The Scoville scale measures pain, not flavor — and the numbers are staggering.",
+    explanation:
+      "Wilbur Scoville invented his heat scale in 1912 by diluting chili extract with sugar water until tasters could no longer detect the burn. Modern HPLC testing measures capsaicin concentration directly. A bell pepper scores 0 SHU (Scoville Heat Units), a jalapeño 2,500–8,000, a habanero 100,000–350,000, and the Carolina Reaper peaks at 2.2 million SHU. Pure capsaicin is 16 million SHU. The scale is logarithmic in practice — each step up in perceived heat requires roughly 10x more capsaicin.",
+    diagram: "scoville",
+    tryThis: {
+      title: "The Heat Ladder",
+      steps: [
+        "Line up: bell pepper, jalapeño, serrano, and habanero (use a tiny sliver of each).",
+        "Taste from mildest to hottest, waiting 2 minutes between each.",
+        "Notice how each jump feels exponentially hotter, not linearly.",
+        "Have milk ready — remember, capsaicin is fat-soluble!",
+      ],
+      whyItWorks:
+        "TRPV1 receptor activation increases non-linearly with capsaicin concentration. A habanero isn't 40x hotter than a jalapeño — it feels 40x hotter because of how pain nerves amplify the signal.",
+    },
+  },
+  {
+    id: "acid-fat-salt-heat",
+    title: "Acid–Fat–Salt–Heat Balance",
+    icon: "⚖️",
+    category: "Technique",
+    headline: "Every great dish balances four elements — and you can fix almost any dish by adjusting one of them.",
+    explanation:
+      "Samin Nosrat's framework identifies four elements that govern all cooking: salt enhances and deepens flavor, fat carries and rounds it, acid brightens and lifts, and heat transforms texture and develops complexity. A flat soup? Add acid (lemon). A harsh vinaigrette? Add fat (olive oil). A dull stew? Add salt. A one-note sauce? Apply more heat (reduce it). Master cooks instinctively balance these four forces in every dish.",
+    diagram: "balance",
+    tryThis: {
+      title: "The Four-Fix Challenge",
+      steps: [
+        "Make a simple tomato soup or broth.",
+        "Taste it plain — identify what's missing.",
+        "Add a squeeze of lemon (acid), then taste. Then a pat of butter (fat), then taste.",
+        "Notice how each addition transforms the same base into something more complete.",
+      ],
+      whyItWorks:
+        "Salt suppresses bitterness and enhances other tastes. Fat carries lipophilic aromatics. Acid activates salivation and brightens muted flavors. Heat creates Maillard and caramelization products. Together they cover all your taste and aroma receptors.",
+    },
+  },
+  {
+    id: "deglazing",
+    title: "Deglazing",
+    icon: "🍳",
+    category: "Technique",
+    headline: "Those brown bits stuck to your pan are concentrated flavor gold — and liquid is the key to unlocking them.",
+    explanation:
+      "When you sear meat or vegetables, proteins and sugars undergo Maillard reactions and caramelization on the pan surface, creating 'fond' — a layer of intensely flavored browned compounds. Deglazing means adding liquid (wine, stock, vinegar) to the hot pan. The liquid dissolves the fond, creating an instant flavor-packed sauce. The steam from the liquid also helps lift stubborn bits. Professional chefs consider the fond the most valuable part of the cooking process.",
+    diagram: "deglazing",
+    tryThis: {
+      title: "The Pan Sauce in 60 Seconds",
+      steps: [
+        "After searing chicken or steak, remove the meat and keep the pan hot.",
+        "Add ½ cup wine or stock — it will sizzle and steam immediately.",
+        "Scrape the bottom with a wooden spoon as the liquid reduces by half.",
+        "Swirl in a pat of cold butter — you just made a restaurant-quality sauce.",
+      ],
+      whyItWorks:
+        "The fond contains hundreds of Maillard reaction products that are water-soluble. The liquid dissolves them into a concentrated sauce. The butter emulsifies the sauce and adds richness.",
+    },
+  },
+  {
+    id: "resting-meat",
+    title: "Resting Meat",
+    icon: "🥩",
+    category: "Technique",
+    headline: "Cutting meat too soon loses up to 40% of its juices — patience is the secret ingredient.",
+    explanation:
+      "During cooking, heat drives moisture toward the center of meat as the outer proteins contract. When you remove meat from heat, carryover cooking continues (internal temp rises 5–10°F) while the outer fibers relax and reabsorb moisture. If you cut immediately, pressurized juices flood out onto the cutting board. After resting 5–10 minutes, the temperature and moisture equalize throughout, and the juices stay in the meat when sliced. A properly rested steak loses only about 5% of its juices versus 40% when cut right away.",
+    diagram: "resting",
+    tryThis: {
+      title: "The Two-Steak Comparison",
+      steps: [
+        "Cook two identical steaks to the same internal temperature.",
+        "Cut one immediately — notice the pool of juice on the board.",
+        "Rest the other for 8 minutes, then cut — the board stays nearly dry.",
+        "Taste both: the rested steak is noticeably juicier and more flavorful.",
+      ],
+      whyItWorks:
+        "Heat tightens muscle fibers and pressurizes internal moisture. Resting lets fibers relax and reabsorb liquid. The 5–10°F of carryover cooking also finishes the center without overcooking the edges.",
+    },
+  },
+  {
+    id: "blooming-spices",
+    title: "Blooming Spices",
+    icon: "✨",
+    category: "Technique",
+    headline: "Heating spices in fat before adding other ingredients can multiply their flavor intensity by 10x.",
+    explanation:
+      "Most spice flavor compounds (terpenes, phenols, aldehydes) are fat-soluble and locked inside cell walls. Blooming — toasting spices briefly in hot oil — breaks down cell walls and dissolves these compounds into the fat, which then distributes them evenly throughout the dish. Dry-toasting works too but only activates heat-volatile compounds. Oil-blooming extracts a wider range of flavors. Indian cooking calls this 'tadka' or 'tempering' — it's why Indian food achieves such deep spice complexity.",
+    diagram: "blooming",
+    tryThis: {
+      title: "The Cumin Two-Way Test",
+      steps: [
+        "Add cumin seeds directly to a pot of plain rice as it cooks.",
+        "In a separate batch, bloom cumin seeds in hot oil for 30 seconds first, then add the rice.",
+        "Cook both identically and taste side by side.",
+        "The bloomed version will have dramatically more cumin flavor throughout every grain.",
+      ],
+      whyItWorks:
+        "Hot oil extracts cumin's key compounds (cuminaldehyde, terpinene) from the seed's cell walls and distributes them as a flavor-carrying fat throughout the dish. Dry addition only releases surface-level volatiles.",
+    },
+  },
+  {
+    id: "wine-pairing",
+    title: "Wine Pairing Basics",
+    icon: "🍷",
+    category: "Pairing",
+    headline: "Great wine pairing isn't about rules — it's about matching weight, cutting contrast, or creating harmony.",
+    explanation:
+      "Wine pairing follows three principles: match (pair similar intensities — bold Cabernet with rich steak), contrast (pair opposites — acidic Sauvignon Blanc cuts through creamy cheese), and complement (shared flavor notes — oaky Chardonnay with butter-sauced fish). Tannins in red wine bind to proteins and fat, which is why red wine + steak works — the fat softens the tannins. Acidic wines pair with fatty foods because acid cuts richness. Sweet wines pair with spicy food because sugar tempers capsaicin's burn.",
+    diagram: "wine",
+    tryThis: {
+      title: "The Tannin Experiment",
+      steps: [
+        "Take a sip of dry red wine (Cabernet) — notice the drying, astringent feeling.",
+        "Now eat a bite of aged cheese or fatty meat.",
+        "Sip the wine again — it tastes softer and fruitier.",
+        "The fat coated your palate and bound to tannins, changing your perception.",
+      ],
+      whyItWorks:
+        "Tannins are polyphenols that bind to salivary proteins, causing astringency. Fat and protein compete for tannin binding, reducing the drying sensation and letting fruit flavors come forward.",
+    },
+  },
+  {
+    id: "cheese-aging",
+    title: "Cheese Aging",
+    icon: "🧀",
+    category: "Pairing",
+    headline: "Aging cheese is controlled decomposition — enzymes slowly build flavor complexity over months or years.",
+    explanation:
+      "Fresh cheese is mild because its proteins are intact. During aging (affinage), enzymes from bacteria and molds break down casein proteins into free amino acids — including glutamate (umami) and tyrosine (which forms crunchy crystals in aged Parmesan). Lipases break fats into flavorful fatty acids. A 24-month Parmigiano-Reggiano has 10x the free glutamate of fresh mozzarella. The white crystals in aged cheese aren't salt — they're tyrosine and calcium lactate, physical evidence of enzymatic flavor development.",
+    diagram: "cheese",
+    tryThis: {
+      title: "The Age Comparison",
+      steps: [
+        "Taste fresh mozzarella — notice the mild, milky, simple flavor.",
+        "Taste a 12-month aged cheddar — more complex, sharper, nuttier.",
+        "Taste 24-month Parmigiano-Reggiano — intensely savory with crystal crunch.",
+        "All are cow's milk cheese — the only difference is time and microbial work.",
+      ],
+      whyItWorks:
+        "Longer aging = more enzymatic protein breakdown = more free glutamate (umami) and free amino acids (complexity). The tyrosine crystals are a visible sign that proteolysis has created deep flavor.",
+    },
+  },
+  {
+    id: "regional-flavor-profiles",
+    title: "Regional Flavor Profiles",
+    icon: "🌍",
+    category: "Culture",
+    headline: "Every cuisine has a signature flavor formula — learn the pattern and you can improvise any dish from that tradition.",
+    explanation:
+      "Thai cuisine balances sweet, sour, salty, and spicy (palm sugar + lime + fish sauce + chili). Mexican layers smoky, earthy, and bright (dried chilies + cumin + lime + cilantro). French builds fond-based depth with fat and acid (butter + wine + herbs + stock). Japanese pursues clean umami layering (dashi + soy + mirin + subtle heat). Southern US combines smoke, sweetness, and tang (pork fat + brown sugar + vinegar + black pepper). Understanding these formulas lets you create authentic-feeling dishes from memory.",
+    diagram: "regional",
+    tryThis: {
+      title: "The Universal Sauce Base",
+      steps: [
+        "Start with a plain sautéed chicken breast — intentionally bland baseline.",
+        "Make a Thai finish: lime juice, fish sauce, sugar, chili flakes.",
+        "Make a French finish: butter, white wine, thyme, lemon.",
+        "Taste both — same protein, completely different cuisine, just by changing the flavor formula.",
+      ],
+      whyItWorks:
+        "Each cuisine's 'formula' targets different taste receptors in a specific balance. Thai hits all five tastes aggressively. French emphasizes fat-carried aromatics with subtle acid. The protein is just a canvas.",
+    },
+  },
 ];

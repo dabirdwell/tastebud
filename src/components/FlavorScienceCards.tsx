@@ -156,6 +156,195 @@ function DiagramIcon({ type, size = 120 }: { type: string; size?: number }) {
         <text x={cx} y={size - 15} textAnchor="middle" fill="#e67e22" fontSize="7">complexity over time</text>
       </svg>
     ),
+    caramelization: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <defs>
+          <linearGradient id="caramelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f5e6d3" />
+            <stop offset="33%" stopColor="#e8a040" />
+            <stop offset="66%" stopColor="#8b4513" />
+            <stop offset="100%" stopColor="#2d1600" />
+          </linearGradient>
+        </defs>
+        <rect x="15" y={cy - 8} width={size - 30} height="16" rx="8" fill="url(#caramelGrad)" />
+        <text x="22" y={cy - 14} fill="#f5e6d3" fontSize="6">320°F</text>
+        <text x={cx - 5} y={cy - 14} fill="#e8a040" fontSize="6">340°F</text>
+        <text x={size - 38} y={cy - 14} fill="#8b4513" fontSize="6">380°F</text>
+        <text x="22" y={cy + 20} fill="#f5e6d3" fontSize="5">pale gold</text>
+        <text x={cx - 8} y={cy + 20} fill="#d4956b" fontSize="5">amber</text>
+        <text x={size - 40} y={cy + 20} fill="#8b4513" fontSize="5">dark</text>
+        <text x={cx} y="18" textAnchor="middle" fill="#e67e22" fontSize="7">sugar → 100s of compounds</text>
+        <text x={cx} y={size - 15} textAnchor="middle" fill="#d4956b" fontSize="7">no amino acids needed</text>
+      </svg>
+    ),
+    emulsification: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <circle cx="30" cy={cy} r="15" fill="#4a6fa5" opacity="0.2" stroke="#4a6fa5" strokeWidth="1" />
+        <text x="30" y={cy + 3} textAnchor="middle" fill="#4a6fa5" fontSize="7">H₂O</text>
+        <circle cx="90" cy={cy} r="15" fill="#e8a040" opacity="0.2" stroke="#e8a040" strokeWidth="1" />
+        <text x="90" y={cy + 3} textAnchor="middle" fill="#e8a040" fontSize="7">OIL</text>
+        <circle cx={cx} cy={cy} r="8" fill="#a8c256" opacity="0.3" stroke="#a8c256" strokeWidth="1" />
+        <text x={cx} y={cy + 3} textAnchor="middle" fill="#a8c256" fontSize="5">E</text>
+        <line x1="42" y1={cy} x2="52" y2={cy} stroke="#e8e0d4" strokeWidth="0.5" strokeDasharray="2 2" />
+        <line x1="68" y1={cy} x2="78" y2={cy} stroke="#e8e0d4" strokeWidth="0.5" strokeDasharray="2 2" />
+        <text x={cx} y="18" textAnchor="middle" fill="#a8c256" fontSize="7">emulsifier bridges</text>
+        <text x={cx} y={size - 15} textAnchor="middle" fill="#e8e0d4" fontSize="7" opacity="0.7">oil + water = stable mix</text>
+      </svg>
+    ),
+    scoville: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <rect x="20" y="25" width="12" height={size - 50} rx="6" fill="none" stroke="#4a6fa5" strokeWidth="1" opacity="0.3" />
+        <rect x="20" y={size - 25 - 10} width="12" height="10" rx="3" fill="#22c55e" opacity="0.5" />
+        <rect x="40" y="25" width="12" height={size - 50} rx="6" fill="none" stroke="#4a6fa5" strokeWidth="1" opacity="0.3" />
+        <rect x="40" y={size - 25 - 25} width="12" height="25" rx="3" fill="#eab308" opacity="0.5" />
+        <rect x="60" y="25" width="12" height={size - 50} rx="6" fill="none" stroke="#4a6fa5" strokeWidth="1" opacity="0.3" />
+        <rect x="60" y={size - 25 - 45} width="12" height="45" rx="3" fill="#e67e22" opacity="0.5" />
+        <rect x="80" y="25" width="12" height={size - 50} rx="6" fill="none" stroke="#4a6fa5" strokeWidth="1" opacity="0.3" />
+        <rect x="80" y="25" width="12" height={size - 50} rx="3" fill="#c0392b" opacity="0.5" />
+        <text x="26" y={size - 10} textAnchor="middle" fill="#22c55e" fontSize="5">0</text>
+        <text x="46" y={size - 10} textAnchor="middle" fill="#eab308" fontSize="5">8K</text>
+        <text x="66" y={size - 10} textAnchor="middle" fill="#e67e22" fontSize="5">350K</text>
+        <text x="86" y={size - 10} textAnchor="middle" fill="#c0392b" fontSize="5">2.2M</text>
+        <text x={cx + 3} y="18" textAnchor="middle" fill="#e67e22" fontSize="7">Scoville Heat Units</text>
+      </svg>
+    ),
+    balance: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <line x1={cx} y1="20" x2={cx} y2={size - 20} stroke="#2a2a22" strokeWidth="0.5" />
+        <line x1="20" y1={cy} x2={size - 20} y2={cy} stroke="#2a2a22" strokeWidth="0.5" />
+        <circle cx={cx - 25} cy={cy - 25} r="14" fill="none" stroke="#a8c256" strokeWidth="1.5" opacity="0.6" />
+        <text x={cx - 25} y={cy - 22} textAnchor="middle" fill="#a8c256" fontSize="7">ACID</text>
+        <circle cx={cx + 25} cy={cy - 25} r="14" fill="none" stroke="#e8a040" strokeWidth="1.5" opacity="0.6" />
+        <text x={cx + 25} y={cy - 22} textAnchor="middle" fill="#e8a040" fontSize="7">FAT</text>
+        <circle cx={cx - 25} cy={cy + 25} r="14" fill="none" stroke="#dcdcdc" strokeWidth="1.5" opacity="0.6" />
+        <text x={cx - 25} y={cy + 28} textAnchor="middle" fill="#dcdcdc" fontSize="7">SALT</text>
+        <circle cx={cx + 25} cy={cy + 25} r="14" fill="none" stroke="#c0392b" strokeWidth="1.5" opacity="0.6" />
+        <text x={cx + 25} y={cy + 28} textAnchor="middle" fill="#c0392b" fontSize="7">HEAT</text>
+        <circle cx={cx} cy={cy} r="6" fill="#b87333" opacity="0.3" />
+        <text x={cx} y={cy + 3} textAnchor="middle" fill="#d4956b" fontSize="5">⚖</text>
+      </svg>
+    ),
+    deglazing: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <ellipse cx={cx} cy={cy + 15} rx="40" ry="12" fill="none" stroke="#666" strokeWidth="1.5" opacity="0.4" />
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <rect
+            key={i}
+            x={30 + i * 12}
+            y={cy + 8}
+            width="5"
+            height="4"
+            rx="1"
+            fill="#8b4513"
+            opacity={0.5 + i * 0.08}
+          />
+        ))}
+        <text x={cx} y={cy - 5} textAnchor="middle" fill="#4a6fa5" fontSize="7">💧 liquid</text>
+        <path d={`M${cx} ${cy + 2} L${cx} ${cy + 8}`} stroke="#4a6fa5" strokeWidth="1" strokeDasharray="2 1" />
+        <text x={cx} y="18" textAnchor="middle" fill="#8b4513" fontSize="7">fond (brown bits)</text>
+        <text x={cx} y={size - 12} textAnchor="middle" fill="#d4956b" fontSize="7">→ instant sauce</text>
+      </svg>
+    ),
+    resting: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <rect x="20" y="30" width="35" height="25" rx="3" fill="#8b4513" opacity="0.4" stroke="#8b4513" strokeWidth="1" />
+        <text x="37" y="46" textAnchor="middle" fill="#c0392b" fontSize="6">CUT NOW</text>
+        {[0, 1, 2].map((i) => (
+          <line key={i} x1={60 + i * 3} y1={38 + i * 4} x2={65 + i * 3} y2={55} stroke="#4a6fa5" strokeWidth="1" opacity={0.6 - i * 0.15} />
+        ))}
+        <text x="37" y="68" textAnchor="middle" fill="#c0392b" fontSize="5">40% juice lost</text>
+        <rect x="75" y="30" width="35" height="25" rx="3" fill="#8b4513" opacity="0.6" stroke="#8b4513" strokeWidth="1" />
+        <text x="92" y="46" textAnchor="middle" fill="#a8c256" fontSize="6">RESTED</text>
+        <text x="92" y="68" textAnchor="middle" fill="#a8c256" fontSize="5">5% juice lost</text>
+        <text x={cx} y="18" textAnchor="middle" fill="#e8e0d4" fontSize="7" opacity="0.7">rest 5–10 min</text>
+        <text x={cx} y={size - 12} textAnchor="middle" fill="#d4956b" fontSize="7">moisture redistributes</text>
+      </svg>
+    ),
+    blooming: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <circle cx="30" cy={cy} r="10" fill="#8b4513" opacity="0.4" stroke="#8b4513" strokeWidth="1" />
+        <text x="30" y={cy + 3} textAnchor="middle" fill="#d4956b" fontSize="5">spice</text>
+        <text x={cx} y={cy - 2} fill="#e67e22" fontSize="8">+</text>
+        <circle cx="70" cy={cy} r="10" fill="#e8a040" opacity="0.2" stroke="#e8a040" strokeWidth="1" />
+        <text x="70" y={cy + 3} textAnchor="middle" fill="#e8a040" fontSize="5">hot oil</text>
+        <text x="88" y={cy} fill="#e8e0d4" fontSize="8">=</text>
+        {[0, 1, 2].map((i) => (
+          <circle
+            key={i}
+            cx={102}
+            cy={cy - 8 + i * 8}
+            r={4 + i}
+            fill="none"
+            stroke="#d4956b"
+            strokeWidth="0.8"
+            opacity={0.7 - i * 0.15}
+          />
+        ))}
+        <text x={cx} y="18" textAnchor="middle" fill="#d4956b" fontSize="7">bloom = 10x flavor</text>
+        <text x={cx} y={size - 12} textAnchor="middle" fill="#e8a040" fontSize="7">fat extracts aromatics</text>
+      </svg>
+    ),
+    wine: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <path d={`M${cx - 5} 25 L${cx - 15} ${cy - 5} Q${cx} ${cy + 10} ${cx + 15} ${cy - 5} L${cx + 5} 25 Z`} fill="#722f37" opacity="0.3" stroke="#722f37" strokeWidth="1" />
+        <line x1={cx} y1={cy + 5} x2={cx} y2={size - 25} stroke="#722f37" strokeWidth="1.5" opacity="0.5" />
+        <line x1={cx - 12} y1={size - 25} x2={cx + 12} y2={size - 25} stroke="#722f37" strokeWidth="1.5" opacity="0.5" />
+        <text x={cx} y={cy - 10} textAnchor="middle" fill="#e8a0bf" fontSize="6">tannins</text>
+        <text x="15" y={cy + 5} fill="#a8c256" fontSize="6">acid</text>
+        <text x={size - 30} y={cy + 5} fill="#e8a040" fontSize="6">fat</text>
+        <path d={`M25 ${cy + 8} L${cx - 18} ${cy + 3}`} stroke="#a8c256" strokeWidth="0.5" strokeDasharray="2 1" />
+        <path d={`M${size - 25} ${cy + 8} L${cx + 18} ${cy + 3}`} stroke="#e8a040" strokeWidth="0.5" strokeDasharray="2 1" />
+        <text x={cx} y="16" textAnchor="middle" fill="#722f37" fontSize="7">match · contrast · complement</text>
+      </svg>
+    ),
+    cheese: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <rect x="15" y={cy - 15} width="25" height="25" rx="4" fill="#f5e6d3" opacity="0.3" stroke="#f5e6d3" strokeWidth="1" />
+        <text x="27" y={cy + 3} textAnchor="middle" fill="#f5e6d3" fontSize="5">fresh</text>
+        <text x="47" y={cy + 3} fill="#e8e0d4" fontSize="8">→</text>
+        <rect x="55" y={cy - 15} width="25" height="25" rx="4" fill="#e8a040" opacity="0.3" stroke="#e8a040" strokeWidth="1" />
+        <text x="67" y={cy + 3} textAnchor="middle" fill="#e8a040" fontSize="5">aged</text>
+        <text x="87" y={cy + 3} fill="#e8e0d4" fontSize="8">→</text>
+        <rect x="93" y={cy - 15} width="20" height="25" rx="4" fill="#d4956b" opacity="0.4" stroke="#d4956b" strokeWidth="1" />
+        <text x="103" y={cy - 2} textAnchor="middle" fill="#d4956b" fontSize="4">24mo</text>
+        {[0, 1, 2].map((i) => (
+          <circle key={i} cx={97 + i * 5} cy={cy + 6} r="1.5" fill="#fff" opacity="0.6" />
+        ))}
+        <text x={cx} y="18" textAnchor="middle" fill="#e8a040" fontSize="7">enzymes build umami</text>
+        <text x={cx} y={size - 12} textAnchor="middle" fill="#d4956b" fontSize="6">crystals = tyrosine = flavor</text>
+      </svg>
+    ),
+    regional: (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        {[
+          { x: cx, y: 22, label: "🇹🇭", color: "#22c55e" },
+          { x: 20, y: cy - 5, label: "🇲🇽", color: "#c0392b" },
+          { x: size - 20, y: cy - 5, label: "🇫🇷", color: "#4a6fa5" },
+          { x: 28, y: cy + 22, label: "🇯🇵", color: "#e67e22" },
+          { x: size - 28, y: cy + 22, label: "🇺🇸", color: "#d4956b" },
+        ].map((r, i) => (
+          <g key={i}>
+            <circle cx={r.x} cy={r.y} r="12" fill="none" stroke={r.color} strokeWidth="1" opacity="0.4" />
+            <text x={r.x} y={r.y + 4} textAnchor="middle" fontSize="10">{r.label}</text>
+          </g>
+        ))}
+        <circle cx={cx} cy={cy + 5} r="5" fill="#b87333" opacity="0.3" />
+        {[0, 1, 2, 3, 4].map((i) => {
+          const angle = (i * 72 - 90) * (Math.PI / 180);
+          const targets = [
+            { x: cx, y: 22 },
+            { x: 20, y: cy - 5 },
+            { x: size - 20, y: cy - 5 },
+            { x: 28, y: cy + 22 },
+            { x: size - 28, y: cy + 22 },
+          ];
+          return (
+            <line key={i} x1={cx} y1={cy + 5} x2={targets[i].x} y2={targets[i].y} stroke="#b87333" strokeWidth="0.5" opacity="0.3" strokeDasharray="2 2" />
+          );
+        })}
+        <text x={cx} y={size - 10} textAnchor="middle" fill="#e8e0d4" fontSize="6" opacity="0.7">each cuisine = unique flavor formula</text>
+      </svg>
+    ),
   };
 
   return diagrams[type] ?? (
@@ -173,6 +362,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   Biology: "border-green-600/40 text-green-500 bg-green-500/10",
   Perception: "border-purple-500/40 text-purple-400 bg-purple-500/10",
   Physics: "border-blue-500/40 text-blue-400 bg-blue-500/10",
+  Technique: "border-rose-500/40 text-rose-400 bg-rose-500/10",
+  Pairing: "border-teal-500/40 text-teal-400 bg-teal-500/10",
+  Culture: "border-orange-500/40 text-orange-400 bg-orange-500/10",
 };
 
 /* ── Single card ──────────────────────────────────────────────── */
@@ -271,7 +463,7 @@ export default function FlavorScienceCards() {
           The <span className="text-copper">Science</span> Behind Every Bite
         </h1>
         <p className="text-foreground/50 text-sm max-w-xl mx-auto">
-          10 surprising food science facts that will change how you taste, cook, and think about flavor.
+          20 surprising food science facts that will change how you taste, cook, and think about flavor.
           Each card includes a hands-on experiment you can try at home.
         </p>
       </div>
