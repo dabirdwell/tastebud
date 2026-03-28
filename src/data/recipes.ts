@@ -3,6 +3,8 @@ import type { FlavorProfile } from "./ingredients";
 export interface RecipeIngredient {
   name: string;
   emoji: string;
+  amount?: string;
+  unit?: string;
   flavorProfile: FlavorProfile;
 }
 
@@ -15,6 +17,12 @@ export interface Recipe {
   time: number; // minutes
   ingredients: RecipeIngredient[];
   techniques: string[];
+  prepTime?: number;
+  cookTime?: number;
+  tags?: string[];
+  steps?: { instruction: string; timerSeconds?: number }[];
+  difficultyLevel?: number; // 1-5
+  flavorProfile?: { sweet: number; salty: number; sour: number; bitter: number; umami: number; spicy: number }; // 0-10
 }
 
 export const CUISINES = [
@@ -31,6 +39,8 @@ export const CUISINES = [
 ] as const;
 
 export const DIFFICULTIES = ["Easy", "Medium", "Hard"] as const;
+
+export const ALL_TAGS = ["weeknight", "quick", "comfort", "healthy", "vegetarian", "beginner"] as const;
 
 export const RECIPES: Recipe[] = [
   {
@@ -530,6 +540,494 @@ export const RECIPES: Recipe[] = [
     ],
     techniques: ["Individual vegetable sautéing", "Layered assembly", "Low-slow stewing", "Herb finishing"],
   },
+  // ── Quick Weeknight Meals ───────────────────────────────────────
+  {
+    id: "garlic-butter-shrimp-pasta",
+    name: "Garlic Butter Shrimp Pasta",
+    cuisine: "Italian",
+    description:
+      "A quick, luxurious pasta tossed with succulent shrimp in a garlicky butter-wine sauce. Finished with a squeeze of lemon and fresh parsley for brightness.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 25,
+    prepTime: 10,
+    cookTime: 15,
+    tags: ["weeknight", "quick"],
+    flavorProfile: { sweet: 3, salty: 5, sour: 3, bitter: 1, umami: 6, spicy: 3 },
+    ingredients: [
+      { name: "Spaghetti", emoji: "🍝", amount: "400", unit: "g", flavorProfile: { sweet: 10, salty: 5, umami: 10, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Shrimp", emoji: "🦐", amount: "450", unit: "g", flavorProfile: { sweet: 20, salty: 25, umami: 65, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Garlic", emoji: "🧄", amount: "6", unit: "cloves", flavorProfile: { sweet: 10, salty: 5, umami: 40, sour: 5, bitter: 15, spicy: 45 } },
+      { name: "Butter", emoji: "🧈", amount: "4", unit: "tbsp", flavorProfile: { sweet: 20, salty: 30, umami: 25, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "White Wine", emoji: "🍷", amount: "120", unit: "ml", flavorProfile: { sweet: 15, salty: 0, umami: 10, sour: 25, bitter: 20, spicy: 0 } },
+      { name: "Red Pepper Flakes", emoji: "🌶️", amount: "1", unit: "tsp", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 5, spicy: 70 } },
+      { name: "Lemon", emoji: "🍋", amount: "1", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+      { name: "Parsley", emoji: "🌿", amount: "3", unit: "tbsp", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 5, bitter: 15, spicy: 5 } },
+    ],
+    techniques: ["Sautéing", "Deglazing", "Emulsifying", "Al dente timing"],
+    steps: [
+      { instruction: "Bring a large pot of salted water to a boil and cook spaghetti until al dente.", timerSeconds: 480 },
+      { instruction: "While pasta cooks, melt butter in a large skillet over medium heat. Add minced garlic and red pepper flakes, sauté until fragrant.", timerSeconds: 60 },
+      { instruction: "Add shrimp to the skillet in a single layer. Cook until pink on both sides.", timerSeconds: 180 },
+      { instruction: "Pour in white wine and let it reduce by half, scraping up any browned bits.", timerSeconds: 120 },
+      { instruction: "Drain pasta, reserving 1 cup pasta water. Add pasta to the skillet and toss to coat, adding pasta water as needed." },
+      { instruction: "Squeeze lemon over the top, garnish with chopped parsley, and serve immediately." },
+    ],
+  },
+  {
+    id: "pad-kra-pao",
+    name: "Pad Kra Pao",
+    cuisine: "Thai",
+    description:
+      "Thailand's beloved street food — stir-fried ground chicken with holy basil, chilies, and a savory-sweet sauce. Served over rice with a crispy fried egg on top.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 15,
+    prepTime: 5,
+    cookTime: 10,
+    tags: ["weeknight", "quick"],
+    flavorProfile: { sweet: 2, salty: 6, sour: 2, bitter: 1, umami: 7, spicy: 8 },
+    ingredients: [
+      { name: "Ground Chicken", emoji: "🍗", amount: "500", unit: "g", flavorProfile: { sweet: 10, salty: 15, umami: 55, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Thai Holy Basil", emoji: "🌿", amount: "2", unit: "cups", flavorProfile: { sweet: 10, salty: 0, umami: 10, sour: 0, bitter: 15, spicy: 25 } },
+      { name: "Garlic", emoji: "🧄", amount: "6", unit: "cloves", flavorProfile: { sweet: 10, salty: 5, umami: 40, sour: 5, bitter: 15, spicy: 45 } },
+      { name: "Thai Chilies", emoji: "🌶️", amount: "5", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 5, spicy: 95 } },
+      { name: "Soy Sauce", emoji: "🥫", amount: "2", unit: "tbsp", flavorProfile: { sweet: 15, salty: 90, umami: 85, sour: 10, bitter: 15, spicy: 0 } },
+      { name: "Oyster Sauce", emoji: "🥫", amount: "1", unit: "tbsp", flavorProfile: { sweet: 20, salty: 60, umami: 70, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Fish Sauce", emoji: "🐟", amount: "1", unit: "tbsp", flavorProfile: { sweet: 5, salty: 85, umami: 80, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Sugar", emoji: "🍬", amount: "1", unit: "tsp", flavorProfile: { sweet: 95, salty: 0, umami: 0, sour: 0, bitter: 0, spicy: 0 } },
+    ],
+    techniques: ["Wok cooking", "Stir-frying", "Aromatics pounding"],
+    steps: [
+      { instruction: "Pound garlic and Thai chilies together in a mortar until coarsely crushed." },
+      { instruction: "Heat oil in a wok over high heat until smoking. Add the garlic-chili paste and stir-fry for 30 seconds.", timerSeconds: 30 },
+      { instruction: "Add ground chicken, breaking it apart. Stir-fry until cooked through.", timerSeconds: 180 },
+      { instruction: "Season with soy sauce, oyster sauce, fish sauce, and sugar. Toss to combine." },
+      { instruction: "Remove from heat and fold in holy basil leaves until just wilted." },
+      { instruction: "Serve over steamed rice, topped with a fried egg." },
+    ],
+  },
+  {
+    id: "black-bean-tacos",
+    name: "Black Bean Tacos",
+    cuisine: "Mexican",
+    description:
+      "Simple, satisfying vegetarian tacos loaded with spiced black beans, creamy avocado, crunchy onion, and a bright squeeze of lime. Ready in under 15 minutes.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 15,
+    prepTime: 5,
+    cookTime: 10,
+    tags: ["weeknight", "quick", "vegetarian"],
+    flavorProfile: { sweet: 2, salty: 4, sour: 4, bitter: 1, umami: 4, spicy: 5 },
+    ingredients: [
+      { name: "Black Beans", emoji: "🫘", amount: "400", unit: "g", flavorProfile: { sweet: 10, salty: 10, umami: 25, sour: 0, bitter: 10, spicy: 0 } },
+      { name: "Cumin", emoji: "🫙", amount: "1", unit: "tsp", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 0, bitter: 20, spicy: 30 } },
+      { name: "Chili Powder", emoji: "🌶️", amount: "1", unit: "tsp", flavorProfile: { sweet: 10, salty: 5, umami: 10, sour: 0, bitter: 15, spicy: 70 } },
+      { name: "Corn Tortillas", emoji: "🫓", amount: "8", unit: "small", flavorProfile: { sweet: 15, salty: 5, umami: 10, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Avocado", emoji: "🥑", amount: "2", unit: "whole", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Lime", emoji: "🍋", amount: "2", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+      { name: "Cilantro", emoji: "🌿", amount: "1/4", unit: "cup", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 10, bitter: 15, spicy: 10 } },
+      { name: "Red Onion", emoji: "🧅", amount: "1/2", unit: "whole", flavorProfile: { sweet: 25, salty: 0, umami: 15, sour: 10, bitter: 15, spicy: 25 } },
+    ],
+    techniques: ["Pan-frying", "Seasoning", "Taco assembly"],
+    steps: [
+      { instruction: "Drain and rinse black beans. Heat in a skillet with cumin, chili powder, and a splash of water. Mash slightly.", timerSeconds: 300 },
+      { instruction: "Warm tortillas in a dry skillet or directly over a gas flame until pliable.", timerSeconds: 60 },
+      { instruction: "Slice avocado and dice red onion. Roughly chop cilantro." },
+      { instruction: "Spoon seasoned beans onto each tortilla. Top with avocado, onion, and cilantro." },
+      { instruction: "Squeeze fresh lime over each taco and serve." },
+    ],
+  },
+  // ── Comfort Food Classics ──────────────────────────────────────
+  {
+    id: "classic-mac-and-cheese",
+    name: "Classic Mac and Cheese",
+    cuisine: "Southern US",
+    description:
+      "Creamy, cheesy, soul-satisfying baked mac and cheese with a crispy breadcrumb topping. A blend of sharp cheddar and gruyère creates depth beyond the ordinary.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 40,
+    prepTime: 15,
+    cookTime: 25,
+    tags: ["comfort"],
+    flavorProfile: { sweet: 2, salty: 6, sour: 1, bitter: 1, umami: 7, spicy: 1 },
+    ingredients: [
+      { name: "Elbow Macaroni", emoji: "🍝", amount: "450", unit: "g", flavorProfile: { sweet: 10, salty: 5, umami: 10, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Sharp Cheddar", emoji: "🧀", amount: "250", unit: "g", flavorProfile: { sweet: 10, salty: 55, umami: 60, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "Gruyère", emoji: "🧀", amount: "150", unit: "g", flavorProfile: { sweet: 10, salty: 45, umami: 65, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Butter", emoji: "🧈", amount: "4", unit: "tbsp", flavorProfile: { sweet: 20, salty: 30, umami: 25, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "Flour", emoji: "🌾", amount: "3", unit: "tbsp", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Whole Milk", emoji: "🥛", amount: "600", unit: "ml", flavorProfile: { sweet: 25, salty: 10, umami: 15, sour: 5, bitter: 0, spicy: 0 } },
+      { name: "Mustard Powder", emoji: "🫙", amount: "1", unit: "tsp", flavorProfile: { sweet: 5, salty: 5, umami: 10, sour: 10, bitter: 20, spicy: 35 } },
+      { name: "Breadcrumbs", emoji: "🍞", amount: "60", unit: "g", flavorProfile: { sweet: 10, salty: 5, umami: 5, sour: 0, bitter: 5, spicy: 0 } },
+    ],
+    techniques: ["Roux making", "Cheese sauce", "Béchamel", "Baking"],
+    steps: [
+      { instruction: "Preheat oven to 190°C (375°F). Cook macaroni until just under al dente, drain and set aside.", timerSeconds: 420 },
+      { instruction: "Melt butter in a saucepan over medium heat. Whisk in flour and cook for 1 minute to form a roux.", timerSeconds: 60 },
+      { instruction: "Gradually pour in milk while whisking constantly. Cook until the sauce thickens.", timerSeconds: 300 },
+      { instruction: "Remove from heat. Stir in cheddar, gruyère, and mustard powder until smooth." },
+      { instruction: "Fold in the cooked macaroni. Pour into a baking dish and top with breadcrumbs mixed with a little melted butter." },
+      { instruction: "Bake until golden and bubbling on top.", timerSeconds: 900 },
+    ],
+  },
+  {
+    id: "braised-beef-stew",
+    name: "Braised Beef Stew",
+    cuisine: "French",
+    description:
+      "Hearty, slow-cooked beef stew with tender chunks of chuck, root vegetables, and a rich red-wine broth. The kind of dish that fills the whole house with warmth.",
+    difficulty: "Medium",
+    difficultyLevel: 3,
+    time: 140,
+    prepTime: 20,
+    cookTime: 120,
+    tags: ["comfort"],
+    flavorProfile: { sweet: 3, salty: 4, sour: 3, bitter: 3, umami: 8, spicy: 1 },
+    ingredients: [
+      { name: "Beef Chuck", emoji: "🥩", amount: "900", unit: "g", flavorProfile: { sweet: 10, salty: 20, umami: 70, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Red Wine", emoji: "🍷", amount: "250", unit: "ml", flavorProfile: { sweet: 15, salty: 0, umami: 20, sour: 30, bitter: 45, spicy: 0 } },
+      { name: "Carrots", emoji: "🥕", amount: "3", unit: "large", flavorProfile: { sweet: 45, salty: 5, umami: 10, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Potatoes", emoji: "🥔", amount: "500", unit: "g", flavorProfile: { sweet: 15, salty: 5, umami: 10, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Onion", emoji: "🧅", amount: "2", unit: "large", flavorProfile: { sweet: 30, salty: 5, umami: 25, sour: 10, bitter: 15, spicy: 20 } },
+      { name: "Tomato Paste", emoji: "🍅", amount: "2", unit: "tbsp", flavorProfile: { sweet: 25, salty: 15, umami: 65, sour: 35, bitter: 10, spicy: 0 } },
+      { name: "Thyme", emoji: "🌿", amount: "4", unit: "sprigs", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 0, bitter: 20, spicy: 10 } },
+      { name: "Bay Leaf", emoji: "🌿", amount: "2", unit: "leaves", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 35, spicy: 5 } },
+    ],
+    techniques: ["Browning", "Braising", "Deglazing", "Low-slow cooking"],
+    steps: [
+      { instruction: "Cut beef into 5cm chunks. Season generously with salt and pepper. Brown in batches in a heavy Dutch oven over high heat.", timerSeconds: 480 },
+      { instruction: "Remove beef. Sauté diced onion and carrots in the same pot until softened.", timerSeconds: 300 },
+      { instruction: "Stir in tomato paste and cook for 1 minute. Deglaze with red wine, scraping up browned bits.", timerSeconds: 120 },
+      { instruction: "Return beef to pot. Add potatoes, thyme, bay leaf, and enough stock to just cover. Bring to a simmer." },
+      { instruction: "Cover and cook on low heat until beef is fork-tender.", timerSeconds: 5400 },
+      { instruction: "Remove bay leaf and thyme stems. Adjust seasoning and serve in warm bowls." },
+    ],
+  },
+  {
+    id: "creamy-tomato-soup",
+    name: "Creamy Tomato Soup",
+    cuisine: "Italian",
+    description:
+      "Velvety smooth tomato soup enriched with cream and fresh basil. Simple enough for a weeknight but elegant enough for company, especially with a grilled cheese alongside.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 35,
+    prepTime: 10,
+    cookTime: 25,
+    tags: ["comfort", "vegetarian"],
+    flavorProfile: { sweet: 5, salty: 3, sour: 5, bitter: 2, umami: 6, spicy: 1 },
+    ingredients: [
+      { name: "Canned Tomatoes", emoji: "🍅", amount: "800", unit: "g", flavorProfile: { sweet: 35, salty: 10, umami: 55, sour: 40, bitter: 10, spicy: 0 } },
+      { name: "Onion", emoji: "🧅", amount: "1", unit: "large", flavorProfile: { sweet: 30, salty: 5, umami: 25, sour: 10, bitter: 15, spicy: 20 } },
+      { name: "Garlic", emoji: "🧄", amount: "3", unit: "cloves", flavorProfile: { sweet: 10, salty: 5, umami: 40, sour: 5, bitter: 15, spicy: 45 } },
+      { name: "Heavy Cream", emoji: "🥛", amount: "120", unit: "ml", flavorProfile: { sweet: 25, salty: 10, umami: 15, sour: 5, bitter: 0, spicy: 0 } },
+      { name: "Fresh Basil", emoji: "🌿", amount: "1/4", unit: "cup", flavorProfile: { sweet: 10, salty: 0, umami: 10, sour: 0, bitter: 15, spicy: 10 } },
+      { name: "Olive Oil", emoji: "🫒", amount: "2", unit: "tbsp", flavorProfile: { sweet: 5, salty: 0, umami: 10, sour: 5, bitter: 30, spicy: 15 } },
+      { name: "Sugar", emoji: "🍬", amount: "1", unit: "tsp", flavorProfile: { sweet: 95, salty: 0, umami: 0, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Vegetable Broth", emoji: "🥣", amount: "250", unit: "ml", flavorProfile: { sweet: 10, salty: 20, umami: 30, sour: 5, bitter: 5, spicy: 0 } },
+    ],
+    techniques: ["Sautéing", "Blending", "Simmering"],
+    steps: [
+      { instruction: "Heat olive oil in a large pot. Sauté diced onion until translucent.", timerSeconds: 300 },
+      { instruction: "Add minced garlic and cook until fragrant.", timerSeconds: 60 },
+      { instruction: "Pour in canned tomatoes and vegetable broth. Add sugar and season with salt and pepper. Simmer.", timerSeconds: 900 },
+      { instruction: "Use an immersion blender to puree until smooth (or blend in batches)." },
+      { instruction: "Stir in heavy cream and warm through without boiling.", timerSeconds: 120 },
+      { instruction: "Ladle into bowls and garnish with fresh basil leaves and a drizzle of olive oil." },
+    ],
+  },
+  // ── International Dishes (Thai, Mexican, Japanese) ─────────────
+  {
+    id: "tom-kha-gai",
+    name: "Tom Kha Gai",
+    cuisine: "Thai",
+    description:
+      "Thailand's famous coconut-galangal chicken soup — creamy, aromatic, and perfectly balanced between rich coconut, tart lime, and fragrant lemongrass.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 35,
+    prepTime: 15,
+    cookTime: 20,
+    tags: ["healthy"],
+    flavorProfile: { sweet: 3, salty: 5, sour: 5, bitter: 1, umami: 5, spicy: 4 },
+    ingredients: [
+      { name: "Chicken Breast", emoji: "🍗", amount: "400", unit: "g", flavorProfile: { sweet: 10, salty: 15, umami: 55, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Coconut Milk", emoji: "🥥", amount: "400", unit: "ml", flavorProfile: { sweet: 35, salty: 5, umami: 10, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Galangal", emoji: "🫚", amount: "5", unit: "slices", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 10, bitter: 15, spicy: 55 } },
+      { name: "Lemongrass", emoji: "🌿", amount: "2", unit: "stalks", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 20, bitter: 10, spicy: 15 } },
+      { name: "Lime Juice", emoji: "🍋", amount: "3", unit: "tbsp", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+      { name: "Fish Sauce", emoji: "🐟", amount: "2", unit: "tbsp", flavorProfile: { sweet: 5, salty: 85, umami: 80, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Mushrooms", emoji: "🍄", amount: "200", unit: "g", flavorProfile: { sweet: 10, salty: 10, umami: 85, sour: 5, bitter: 15, spicy: 0 } },
+      { name: "Thai Chilies", emoji: "🌶️", amount: "3", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 5, spicy: 95 } },
+    ],
+    techniques: ["Aromatic infusion", "Coconut milk simmering", "Flavor balancing"],
+    steps: [
+      { instruction: "Slice chicken into thin strips. Slice mushrooms. Bruise lemongrass stalks and slice galangal." },
+      { instruction: "Bring coconut milk to a gentle simmer. Add galangal, lemongrass, and crushed chilies. Infuse.", timerSeconds: 300 },
+      { instruction: "Add chicken and mushrooms. Cook until chicken is done.", timerSeconds: 420 },
+      { instruction: "Remove from heat. Season with fish sauce and lime juice. Taste and adjust balance." },
+      { instruction: "Serve in deep bowls garnished with cilantro leaves and a drizzle of coconut cream." },
+    ],
+  },
+  {
+    id: "chicken-enchiladas-verdes",
+    name: "Chicken Enchiladas Verdes",
+    cuisine: "Mexican",
+    description:
+      "Rolled tortillas filled with shredded chicken and smothered in tangy, vibrant salsa verde made from roasted tomatillos. Topped with melted cheese and crema.",
+    difficulty: "Medium",
+    difficultyLevel: 3,
+    time: 50,
+    prepTime: 20,
+    cookTime: 30,
+    tags: ["comfort"],
+    flavorProfile: { sweet: 2, salty: 5, sour: 4, bitter: 2, umami: 6, spicy: 6 },
+    ingredients: [
+      { name: "Chicken Breast", emoji: "🍗", amount: "500", unit: "g", flavorProfile: { sweet: 10, salty: 15, umami: 55, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Tomatillos", emoji: "🍅", amount: "450", unit: "g", flavorProfile: { sweet: 15, salty: 5, umami: 30, sour: 50, bitter: 10, spicy: 0 } },
+      { name: "Jalapeños", emoji: "🌶️", amount: "2", unit: "whole", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 5, bitter: 10, spicy: 70 } },
+      { name: "Onion", emoji: "🧅", amount: "1", unit: "medium", flavorProfile: { sweet: 30, salty: 5, umami: 25, sour: 10, bitter: 15, spicy: 20 } },
+      { name: "Garlic", emoji: "🧄", amount: "3", unit: "cloves", flavorProfile: { sweet: 10, salty: 5, umami: 40, sour: 5, bitter: 15, spicy: 45 } },
+      { name: "Corn Tortillas", emoji: "🫓", amount: "12", unit: "medium", flavorProfile: { sweet: 15, salty: 5, umami: 10, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Monterey Jack", emoji: "🧀", amount: "200", unit: "g", flavorProfile: { sweet: 10, salty: 40, umami: 45, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Sour Cream", emoji: "🥛", amount: "120", unit: "ml", flavorProfile: { sweet: 10, salty: 10, umami: 15, sour: 35, bitter: 5, spicy: 0 } },
+    ],
+    techniques: ["Roasting", "Blending", "Rolling enchiladas", "Baking"],
+    steps: [
+      { instruction: "Preheat oven to 200°C (400°F). Roast tomatillos, jalapeños, onion, and garlic on a sheet pan until charred.", timerSeconds: 900 },
+      { instruction: "Blend roasted vegetables with a pinch of salt to make salsa verde." },
+      { instruction: "Poach or roast the chicken, then shred with two forks. Mix with a little salsa verde." },
+      { instruction: "Warm tortillas briefly to make them pliable. Fill each with chicken mixture, roll tightly, and place seam-side down in a baking dish." },
+      { instruction: "Pour remaining salsa verde over enchiladas. Top with shredded cheese." },
+      { instruction: "Bake until cheese is melted and bubbling.", timerSeconds: 900 },
+      { instruction: "Let cool briefly. Drizzle with sour cream and serve with lime wedges." },
+    ],
+  },
+  {
+    id: "teriyaki-salmon-bowl",
+    name: "Teriyaki Salmon Bowl",
+    cuisine: "Japanese",
+    description:
+      "Pan-seared salmon glazed with a sweet-savory homemade teriyaki sauce, served over fluffy rice with edamame, avocado, and a sprinkle of sesame seeds.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 25,
+    prepTime: 10,
+    cookTime: 15,
+    tags: ["healthy"],
+    flavorProfile: { sweet: 5, salty: 6, sour: 2, bitter: 1, umami: 8, spicy: 1 },
+    ingredients: [
+      { name: "Salmon Fillet", emoji: "🐟", amount: "400", unit: "g", flavorProfile: { sweet: 15, salty: 15, umami: 65, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Soy Sauce", emoji: "🥫", amount: "3", unit: "tbsp", flavorProfile: { sweet: 15, salty: 90, umami: 85, sour: 10, bitter: 15, spicy: 0 } },
+      { name: "Mirin", emoji: "🍶", amount: "2", unit: "tbsp", flavorProfile: { sweet: 55, salty: 5, umami: 15, sour: 5, bitter: 0, spicy: 0 } },
+      { name: "Sugar", emoji: "🍬", amount: "1", unit: "tbsp", flavorProfile: { sweet: 95, salty: 0, umami: 0, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Sushi Rice", emoji: "🍚", amount: "300", unit: "g", flavorProfile: { sweet: 20, salty: 5, umami: 10, sour: 15, bitter: 0, spicy: 0 } },
+      { name: "Edamame", emoji: "🫛", amount: "100", unit: "g", flavorProfile: { sweet: 15, salty: 5, umami: 25, sour: 0, bitter: 10, spicy: 0 } },
+      { name: "Avocado", emoji: "🥑", amount: "1", unit: "whole", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Sesame Seeds", emoji: "🫘", amount: "1", unit: "tbsp", flavorProfile: { sweet: 10, salty: 5, umami: 20, sour: 0, bitter: 15, spicy: 0 } },
+    ],
+    techniques: ["Pan-searing", "Teriyaki sauce reduction", "Rice cooking", "Bowl assembly"],
+    steps: [
+      { instruction: "Cook sushi rice according to package directions.", timerSeconds: 900 },
+      { instruction: "Combine soy sauce, mirin, and sugar in a small bowl to make teriyaki sauce." },
+      { instruction: "Heat oil in a skillet over medium-high heat. Place salmon skin-side up and sear until golden.", timerSeconds: 180 },
+      { instruction: "Flip salmon. Pour teriyaki sauce around the fish. Cook while spooning sauce over the top until glazed.", timerSeconds: 180 },
+      { instruction: "Divide rice among bowls. Slice salmon and place on top. Add edamame and sliced avocado." },
+      { instruction: "Drizzle remaining teriyaki sauce over bowls. Sprinkle with sesame seeds." },
+    ],
+  },
+  // ── Healthy/Light Options ──────────────────────────────────────
+  {
+    id: "mediterranean-quinoa-bowl",
+    name: "Mediterranean Quinoa Bowl",
+    cuisine: "Mediterranean",
+    description:
+      "A bright, nourishing bowl of fluffy quinoa with crisp cucumber, juicy tomatoes, briny olives, and crumbled feta — all dressed in a lemony olive-oil vinaigrette.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 30,
+    prepTime: 10,
+    cookTime: 20,
+    tags: ["healthy", "vegetarian"],
+    flavorProfile: { sweet: 3, salty: 4, sour: 5, bitter: 3, umami: 4, spicy: 1 },
+    ingredients: [
+      { name: "Quinoa", emoji: "🌾", amount: "200", unit: "g", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 0, bitter: 15, spicy: 0 } },
+      { name: "Cucumber", emoji: "🥒", amount: "1", unit: "large", flavorProfile: { sweet: 15, salty: 0, umami: 5, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Cherry Tomatoes", emoji: "🍅", amount: "200", unit: "g", flavorProfile: { sweet: 40, salty: 5, umami: 45, sour: 35, bitter: 5, spicy: 0 } },
+      { name: "Kalamata Olives", emoji: "🫒", amount: "80", unit: "g", flavorProfile: { sweet: 5, salty: 60, umami: 30, sour: 15, bitter: 25, spicy: 0 } },
+      { name: "Feta Cheese", emoji: "🧀", amount: "100", unit: "g", flavorProfile: { sweet: 5, salty: 65, umami: 35, sour: 20, bitter: 10, spicy: 0 } },
+      { name: "Red Onion", emoji: "🧅", amount: "1/2", unit: "small", flavorProfile: { sweet: 25, salty: 0, umami: 15, sour: 10, bitter: 15, spicy: 25 } },
+      { name: "Lemon", emoji: "🍋", amount: "1", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+      { name: "Olive Oil", emoji: "🫒", amount: "3", unit: "tbsp", flavorProfile: { sweet: 5, salty: 0, umami: 10, sour: 5, bitter: 30, spicy: 15 } },
+    ],
+    techniques: ["Grain cooking", "Vinaigrette making", "Bowl assembly"],
+    steps: [
+      { instruction: "Rinse quinoa. Combine with water and a pinch of salt. Bring to a boil, then cover and simmer until fluffy.", timerSeconds: 900 },
+      { instruction: "While quinoa cooks, dice cucumber and halve cherry tomatoes. Thinly slice red onion." },
+      { instruction: "Whisk together lemon juice, olive oil, salt, pepper, and a pinch of dried oregano for the dressing." },
+      { instruction: "Fluff quinoa with a fork and let cool slightly." },
+      { instruction: "Toss quinoa with vegetables and dressing. Top with crumbled feta and olives." },
+    ],
+  },
+  {
+    id: "miso-glazed-eggplant",
+    name: "Miso Glazed Eggplant",
+    cuisine: "Japanese",
+    description:
+      "Japanese eggplant halves broiled until silky-soft, then topped with a caramelized sweet miso glaze. Rich in umami, this simple dish delivers deep, complex flavor.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 30,
+    prepTime: 10,
+    cookTime: 20,
+    tags: ["healthy", "vegetarian"],
+    flavorProfile: { sweet: 5, salty: 5, sour: 1, bitter: 2, umami: 8, spicy: 1 },
+    ingredients: [
+      { name: "Japanese Eggplant", emoji: "🍆", amount: "4", unit: "whole", flavorProfile: { sweet: 10, salty: 0, umami: 10, sour: 5, bitter: 25, spicy: 0 } },
+      { name: "White Miso", emoji: "🥣", amount: "3", unit: "tbsp", flavorProfile: { sweet: 25, salty: 75, umami: 85, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "Mirin", emoji: "🍶", amount: "2", unit: "tbsp", flavorProfile: { sweet: 55, salty: 5, umami: 15, sour: 5, bitter: 0, spicy: 0 } },
+      { name: "Sugar", emoji: "🍬", amount: "1", unit: "tbsp", flavorProfile: { sweet: 95, salty: 0, umami: 0, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Sake", emoji: "🍶", amount: "1", unit: "tbsp", flavorProfile: { sweet: 15, salty: 0, umami: 10, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Sesame Seeds", emoji: "🫘", amount: "1", unit: "tbsp", flavorProfile: { sweet: 10, salty: 5, umami: 20, sour: 0, bitter: 15, spicy: 0 } },
+      { name: "Scallions", emoji: "🧅", amount: "2", unit: "stalks", flavorProfile: { sweet: 15, salty: 0, umami: 10, sour: 5, bitter: 10, spicy: 15 } },
+    ],
+    techniques: ["Scoring", "Broiling", "Glaze making", "Caramelizing"],
+    steps: [
+      { instruction: "Preheat broiler. Halve eggplants lengthwise and score the flesh in a crosshatch pattern." },
+      { instruction: "Brush cut sides with oil. Place cut-side up on a baking sheet and broil until soft and lightly golden.", timerSeconds: 600 },
+      { instruction: "Mix miso, mirin, sugar, and sake in a small saucepan. Warm over low heat until smooth.", timerSeconds: 120 },
+      { instruction: "Spread the miso glaze generously over the broiled eggplant halves." },
+      { instruction: "Return to broiler until the glaze caramelizes and bubbles.", timerSeconds: 180 },
+      { instruction: "Garnish with sesame seeds and sliced scallions. Serve immediately." },
+    ],
+  },
+  {
+    id: "thai-larb-wraps",
+    name: "Thai Larb Lettuce Wraps",
+    cuisine: "Thai",
+    description:
+      "Northern Thai minced pork salad served in crisp lettuce cups — bright with lime, fish sauce, toasted rice powder, and a generous handful of fresh herbs.",
+    difficulty: "Easy",
+    difficultyLevel: 2,
+    time: 20,
+    prepTime: 10,
+    cookTime: 10,
+    tags: ["healthy", "quick"],
+    flavorProfile: { sweet: 2, salty: 5, sour: 6, bitter: 2, umami: 5, spicy: 7 },
+    ingredients: [
+      { name: "Ground Pork", emoji: "🥩", amount: "450", unit: "g", flavorProfile: { sweet: 10, salty: 20, umami: 60, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Lime Juice", emoji: "🍋", amount: "3", unit: "tbsp", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+      { name: "Fish Sauce", emoji: "🐟", amount: "2", unit: "tbsp", flavorProfile: { sweet: 5, salty: 85, umami: 80, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Toasted Rice Powder", emoji: "🍚", amount: "2", unit: "tbsp", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 0, bitter: 10, spicy: 0 } },
+      { name: "Shallots", emoji: "🧅", amount: "3", unit: "whole", flavorProfile: { sweet: 25, salty: 0, umami: 15, sour: 10, bitter: 10, spicy: 15 } },
+      { name: "Mint", emoji: "🌿", amount: "1/2", unit: "cup", flavorProfile: { sweet: 15, salty: 0, umami: 5, sour: 5, bitter: 20, spicy: 20 } },
+      { name: "Thai Chilies", emoji: "🌶️", amount: "3", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 5, spicy: 95 } },
+      { name: "Butter Lettuce", emoji: "🥬", amount: "1", unit: "head", flavorProfile: { sweet: 10, salty: 0, umami: 5, sour: 0, bitter: 10, spicy: 0 } },
+    ],
+    techniques: ["Dry-frying meat", "Rice toasting", "Herb tossing", "Flavor balancing"],
+    steps: [
+      { instruction: "Toast raw jasmine rice in a dry pan until deep golden, then grind to a coarse powder.", timerSeconds: 300 },
+      { instruction: "Cook ground pork in a skillet over high heat, breaking it apart, until just cooked. Do not brown.", timerSeconds: 240 },
+      { instruction: "Remove from heat. Add lime juice, fish sauce, sliced shallots, sliced chilies, and toasted rice powder. Toss to combine." },
+      { instruction: "Fold in torn mint and cilantro leaves." },
+      { instruction: "Spoon the larb into lettuce cups and serve immediately with extra lime wedges." },
+    ],
+  },
+  // ── Beginner-Friendly Basics ───────────────────────────────────
+  {
+    id: "french-omelette",
+    name: "Perfect French Omelette",
+    cuisine: "French",
+    description:
+      "A classic French omelette — pale golden outside, creamy and just-set inside. Mastering this simple dish teaches fundamental heat control and pan technique.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 7,
+    prepTime: 2,
+    cookTime: 5,
+    tags: ["quick", "beginner"],
+    flavorProfile: { sweet: 2, salty: 3, sour: 1, bitter: 1, umami: 5, spicy: 0 },
+    ingredients: [
+      { name: "Eggs", emoji: "🥚", amount: "3", unit: "large", flavorProfile: { sweet: 5, salty: 10, umami: 40, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Butter", emoji: "🧈", amount: "1", unit: "tbsp", flavorProfile: { sweet: 20, salty: 30, umami: 25, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "Chives", emoji: "🌿", amount: "1", unit: "tbsp", flavorProfile: { sweet: 10, salty: 0, umami: 10, sour: 5, bitter: 10, spicy: 15 } },
+      { name: "Salt", emoji: "🧂", amount: "1/4", unit: "tsp", flavorProfile: { sweet: 0, salty: 95, umami: 5, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "White Pepper", emoji: "🫙", amount: "1", unit: "pinch", flavorProfile: { sweet: 5, salty: 0, umami: 5, sour: 0, bitter: 10, spicy: 55 } },
+    ],
+    techniques: ["Egg beating", "Pan technique", "Folding", "Heat control"],
+    steps: [
+      { instruction: "Crack eggs into a bowl. Season with salt and white pepper. Beat with a fork until just combined — no foam." },
+      { instruction: "Heat a non-stick pan over medium heat. Add butter and swirl until foaming subsides.", timerSeconds: 30 },
+      { instruction: "Pour in eggs. Stir constantly with a chopstick or spatula, shaking the pan, until small curds form but the top is still slightly wet.", timerSeconds: 60 },
+      { instruction: "Stop stirring. Let the bottom set for a few seconds.", timerSeconds: 15 },
+      { instruction: "Tilt the pan and fold the omelette in thirds onto a warm plate. Garnish with chives." },
+    ],
+  },
+  {
+    id: "one-pot-rice-beans",
+    name: "One-Pot Rice and Beans",
+    cuisine: "Mexican",
+    description:
+      "A budget-friendly, hands-off dinner of seasoned rice and black beans cooked together in one pot. Finished with fresh lime and cilantro for a bright, satisfying meal.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 30,
+    prepTime: 5,
+    cookTime: 25,
+    tags: ["beginner", "vegetarian"],
+    flavorProfile: { sweet: 2, salty: 4, sour: 3, bitter: 1, umami: 5, spicy: 3 },
+    ingredients: [
+      { name: "Long-Grain Rice", emoji: "🍚", amount: "200", unit: "g", flavorProfile: { sweet: 15, salty: 0, umami: 10, sour: 0, bitter: 0, spicy: 0 } },
+      { name: "Black Beans", emoji: "🫘", amount: "400", unit: "g", flavorProfile: { sweet: 10, salty: 10, umami: 25, sour: 0, bitter: 10, spicy: 0 } },
+      { name: "Onion", emoji: "🧅", amount: "1", unit: "medium", flavorProfile: { sweet: 30, salty: 5, umami: 25, sour: 10, bitter: 15, spicy: 20 } },
+      { name: "Garlic", emoji: "🧄", amount: "3", unit: "cloves", flavorProfile: { sweet: 10, salty: 5, umami: 40, sour: 5, bitter: 15, spicy: 45 } },
+      { name: "Cumin", emoji: "🫙", amount: "1", unit: "tsp", flavorProfile: { sweet: 10, salty: 0, umami: 15, sour: 0, bitter: 20, spicy: 30 } },
+      { name: "Chili Powder", emoji: "🌶️", amount: "1/2", unit: "tsp", flavorProfile: { sweet: 10, salty: 5, umami: 10, sour: 0, bitter: 15, spicy: 70 } },
+      { name: "Vegetable Broth", emoji: "🥣", amount: "480", unit: "ml", flavorProfile: { sweet: 10, salty: 20, umami: 30, sour: 5, bitter: 5, spicy: 0 } },
+      { name: "Lime", emoji: "🍋", amount: "1", unit: "whole", flavorProfile: { sweet: 5, salty: 0, umami: 0, sour: 85, bitter: 15, spicy: 0 } },
+    ],
+    techniques: ["Sautéing", "One-pot cooking", "Simmering"],
+    steps: [
+      { instruction: "Sauté diced onion in a little oil over medium heat until soft.", timerSeconds: 240 },
+      { instruction: "Add minced garlic, cumin, and chili powder. Cook until fragrant.", timerSeconds: 60 },
+      { instruction: "Add rice and stir to coat in the spices for 1 minute.", timerSeconds: 60 },
+      { instruction: "Pour in vegetable broth and drained black beans. Bring to a boil." },
+      { instruction: "Reduce to low heat, cover, and cook without lifting the lid until rice is tender and liquid is absorbed.", timerSeconds: 1080 },
+      { instruction: "Fluff with a fork. Squeeze lime juice over the top and stir in chopped cilantro." },
+    ],
+  },
+  {
+    id: "simple-miso-soup",
+    name: "Simple Miso Soup",
+    cuisine: "Japanese",
+    description:
+      "The cornerstone of Japanese home cooking — a warming, umami-rich broth of dashi and miso with silken tofu and wakame seaweed. Ready in minutes, comforting for a lifetime.",
+    difficulty: "Easy",
+    difficultyLevel: 1,
+    time: 15,
+    prepTime: 5,
+    cookTime: 10,
+    tags: ["beginner", "quick", "healthy", "vegetarian"],
+    flavorProfile: { sweet: 2, salty: 5, sour: 1, bitter: 1, umami: 9, spicy: 0 },
+    ingredients: [
+      { name: "Dashi Stock", emoji: "🥣", amount: "800", unit: "ml", flavorProfile: { sweet: 5, salty: 30, umami: 80, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "White Miso Paste", emoji: "🥣", amount: "3", unit: "tbsp", flavorProfile: { sweet: 25, salty: 75, umami: 85, sour: 10, bitter: 5, spicy: 0 } },
+      { name: "Silken Tofu", emoji: "🧊", amount: "200", unit: "g", flavorProfile: { sweet: 10, salty: 5, umami: 25, sour: 0, bitter: 5, spicy: 0 } },
+      { name: "Wakame Seaweed", emoji: "🌿", amount: "2", unit: "tbsp", flavorProfile: { sweet: 5, salty: 30, umami: 55, sour: 5, bitter: 10, spicy: 0 } },
+      { name: "Scallions", emoji: "🧅", amount: "2", unit: "stalks", flavorProfile: { sweet: 15, salty: 0, umami: 10, sour: 5, bitter: 10, spicy: 15 } },
+    ],
+    techniques: ["Dashi preparation", "Miso dissolving", "Tofu cutting", "Temperature control"],
+    steps: [
+      { instruction: "Soak dried wakame in water until rehydrated.", timerSeconds: 300 },
+      { instruction: "Bring dashi stock to a gentle simmer in a saucepan. Do not boil.", timerSeconds: 180 },
+      { instruction: "Cut silken tofu into small cubes. Add tofu and drained wakame to the dashi." },
+      { instruction: "Remove pot from heat. Place miso paste in a ladle, submerge partway, and whisk to dissolve into the broth. Never boil miso." },
+      { instruction: "Ladle into bowls and garnish with thinly sliced scallions." },
+    ],
+  },
 ];
 
 export function computeRecipeProfile(recipe: Recipe): FlavorProfile {
@@ -545,4 +1043,18 @@ export function computeRecipeProfile(recipe: Recipe): FlavorProfile {
     profile[k] = Math.min(100, Math.round(profile[k] / n));
   }
   return profile;
+}
+
+export function getRecipeFlavorProfile(recipe: Recipe): FlavorProfile {
+  if (recipe.flavorProfile) {
+    return {
+      sweet: recipe.flavorProfile.sweet * 10,
+      salty: recipe.flavorProfile.salty * 10,
+      umami: recipe.flavorProfile.umami * 10,
+      sour: recipe.flavorProfile.sour * 10,
+      bitter: recipe.flavorProfile.bitter * 10,
+      spicy: recipe.flavorProfile.spicy * 10,
+    };
+  }
+  return computeRecipeProfile(recipe);
 }

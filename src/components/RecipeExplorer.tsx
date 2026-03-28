@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { RECIPES, CUISINES, DIFFICULTIES, computeRecipeProfile, type Recipe } from "@/data/recipes";
+import { RECIPES, CUISINES, DIFFICULTIES, ALL_TAGS, getRecipeFlavorProfile, type Recipe } from "@/data/recipes";
 import { AXIS_CONFIG, type FlavorProfile } from "@/data/ingredients";
 
 /* ------------------------------------------------------------------ */
@@ -181,7 +181,7 @@ function FullRadar({ profile, size }: { profile: FlavorProfile; size: number }) 
 }
 
 /* ------------------------------------------------------------------ */
-/*  Dominant flavors helper                                           */
+/*  Helpers                                                           */
 /* ------------------------------------------------------------------ */
 
 function getDominantFlavors(profile: FlavorProfile): string[] {
@@ -191,6 +191,32 @@ function getDominantFlavors(profile: FlavorProfile): string[] {
     .slice(0, 3)
     .filter((f) => f.val > 15)
     .map((f) => f.label);
+}
+
+function getDifficultyStars(recipe: Recipe): number {
+  if (recipe.difficultyLevel) return recipe.difficultyLevel;
+  return recipe.difficulty === "Easy" ? 1 : recipe.difficulty === "Medium" ? 3 : 5;
+}
+
+function formatTimer(seconds: number): string {
+  if (seconds >= 3600) {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  }
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m === 0) return `${s}s`;
+  return s > 0 ? `${m}m ${s}s` : `${m}m`;
+}
+
+function DifficultyStars({ count }: { count: number }) {
+  return (
+    <span className="text-[10px] tracking-wide">
+      <span className="text-amber-400">{"★".repeat(count)}</span>
+      <span className="text-foreground/20">{"★".repeat(5 - count)}</span>
+    </span>
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -209,7 +235,7 @@ const TIME_FILTERS = [
 /* ------------------------------------------------------------------ */
 
 function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
-  const profile = computeRecipeProfile(recipe);
+  const profile = getRecipeFlavorProfile(recipe);
   const dominant = getDominantFlavors(profile);
 
   return (
@@ -231,26 +257,32 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
           <p className="text-xs font-medium tracking-widest uppercase text-copper mb-1">{recipe.cuisine}</p>
           <h2 className="text-2xl font-bold text-foreground">{recipe.name}</h2>
           <p className="text-foreground/50 text-sm mt-2 leading-relaxed">{recipe.description}</p>
-          <div className="flex gap-4 mt-3 text-xs text-foreground/40">
-            <span
-              className={`px-2.5 py-0.5 rounded-full border ${
-                recipe.difficulty === "Easy"
-                  ? "border-green-700/40 text-green-500"
-                  : recipe.difficulty === "Medium"
-                    ? "border-amber-600/40 text-amber-500"
-                    : "border-red-700/40 text-red-400"
-              }`}
-            >
-              {recipe.difficulty}
-            </span>
-            <span className="px-2.5 py-0.5 rounded-full border border-border">{recipe.time} min</span>
+          <div className="flex items-center gap-4 mt-3 text-xs text-foreground/40">
+            <DifficultyStars count={getDifficultyStars(recipe)} />
+            {recipe.prepTime != null && recipe.cookTime != null ? (
+              <>
+                <span className="px-2.5 py-0.5 rounded-full border border-border">Prep {recipe.prepTime}m</span>
+                <span className="px-2.5 py-0.5 rounded-full border border-border">Cook {recipe.cookTime}m</span>
+              </>
+            ) : (
+              <span className="px-2.5 py-0.5 rounded-full border border-border">{recipe.time} min</span>
+            )}
           </div>
+          {recipe.tags && recipe.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-3">
+              {recipe.tags.map((tag) => (
+                <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-copper/10 border border-copper/20 text-copper-light capitalize">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Flavor Map */}
           <div className="flex flex-col items-center gap-4 shrink-0">
-            <h3 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">Aggregate Flavor Profile</h3>
+            <h3 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">Flavor Profile</h3>
             <FullRadar profile={profile} size={320} />
             <div className="flex flex-wrap gap-2 justify-center">
               {dominant.map((f) => (
@@ -261,7 +293,7 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
             </div>
           </div>
 
-          {/* Ingredients + Techniques */}
+          {/* Ingredients + Steps + Techniques */}
           <div className="flex-1 space-y-6">
             <div>
               <h3 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-3">Ingredients</h3>
@@ -274,7 +306,12 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
                   return (
                     <div key={ing.name} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-background/50 border border-border/50">
                       <span className="text-base">{ing.emoji}</span>
-                      <span className="text-sm text-foreground/80 flex-1">{ing.name}</span>
+                      <span className="text-sm text-foreground/80 flex-1">
+                        {ing.amount && ing.unit && (
+                          <span className="text-foreground/40 mr-1.5">{ing.amount} {ing.unit}</span>
+                        )}
+                        {ing.name}
+                      </span>
                       {top.val > 30 && (
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-light text-foreground/40">
                           {top.label} {top.val}
@@ -285,6 +322,29 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
                 })}
               </div>
             </div>
+
+            {recipe.steps && recipe.steps.length > 0 && (
+              <div>
+                <h3 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-3">Steps</h3>
+                <ol className="space-y-3">
+                  {recipe.steps.map((step, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="shrink-0 w-6 h-6 rounded-full bg-copper/15 border border-copper/30 text-copper text-xs flex items-center justify-center font-medium">
+                        {i + 1}
+                      </span>
+                      <div className="flex-1">
+                        <p className="text-sm text-foreground/70 leading-relaxed">{step.instruction}</p>
+                        {step.timerSeconds && (
+                          <span className="inline-block mt-1 text-[10px] px-2 py-0.5 rounded-full bg-surface-light border border-border text-foreground/40">
+                            ⏱ {formatTimer(step.timerSeconds)}
+                          </span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
 
             <div>
               <h3 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-3">Key Techniques</h3>
@@ -308,8 +368,9 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
 /* ------------------------------------------------------------------ */
 
 function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }) {
-  const profile = computeRecipeProfile(recipe);
+  const profile = getRecipeFlavorProfile(recipe);
   const dominant = getDominantFlavors(profile);
+  const totalTime = recipe.prepTime != null && recipe.cookTime != null ? recipe.prepTime + recipe.cookTime : recipe.time;
 
   return (
     <button
@@ -331,18 +392,17 @@ function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }
 
       {/* Meta */}
       <div className="flex items-center gap-3 mt-4">
-        <span
-          className={`text-[10px] px-2 py-0.5 rounded-full border ${
-            recipe.difficulty === "Easy"
-              ? "border-green-700/40 text-green-500"
-              : recipe.difficulty === "Medium"
-                ? "border-amber-600/40 text-amber-500"
-                : "border-red-700/40 text-red-400"
-          }`}
-        >
-          {recipe.difficulty}
-        </span>
-        <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-foreground/40">{recipe.time} min</span>
+        <DifficultyStars count={getDifficultyStars(recipe)} />
+        <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-foreground/40">{totalTime} min</span>
+        {recipe.tags && recipe.tags.length > 0 && (
+          <div className="flex gap-1 ml-1">
+            {recipe.tags.slice(0, 3).map((tag) => (
+              <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-surface-light border border-border text-foreground/30 capitalize">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex gap-1.5 ml-auto">
           {dominant.map((f) => (
             <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-copper/10 text-copper-light/70">
@@ -363,6 +423,7 @@ export default function RecipeExplorer() {
   const [selectedCuisine, setSelectedCuisine] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [selectedTimeIdx, setSelectedTimeIdx] = useState(0);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [activeRecipe, setActiveRecipe] = useState<Recipe | null>(null);
 
   const filtered = useMemo(() => {
@@ -370,10 +431,12 @@ export default function RecipeExplorer() {
     return RECIPES.filter((r) => {
       if (selectedCuisine && r.cuisine !== selectedCuisine) return false;
       if (selectedDifficulty && r.difficulty !== selectedDifficulty) return false;
-      if (r.time > maxTime) return false;
+      const totalTime = r.prepTime != null && r.cookTime != null ? r.prepTime + r.cookTime : r.time;
+      if (totalTime > maxTime) return false;
+      if (selectedTag && (!r.tags || !r.tags.includes(selectedTag))) return false;
       return true;
     });
-  }, [selectedCuisine, selectedDifficulty, selectedTimeIdx]);
+  }, [selectedCuisine, selectedDifficulty, selectedTimeIdx, selectedTag]);
 
   return (
     <>
@@ -390,7 +453,7 @@ export default function RecipeExplorer() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-6 mb-10">
           {/* Cuisine */}
           <div className="space-y-2">
             <label className="text-xs text-foreground/40 uppercase tracking-wider font-medium">Cuisine</label>
@@ -466,6 +529,36 @@ export default function RecipeExplorer() {
                   }`}
                 >
                   {tf.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tags */}
+          <div className="space-y-2">
+            <label className="text-xs text-foreground/40 uppercase tracking-wider font-medium">Tags</label>
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                onClick={() => setSelectedTag(null)}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                  !selectedTag
+                    ? "bg-copper/20 text-copper-light border border-copper/30"
+                    : "bg-surface text-foreground/50 border border-border hover:text-foreground/70"
+                }`}
+              >
+                All
+              </button>
+              {ALL_TAGS.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors capitalize ${
+                    selectedTag === tag
+                      ? "bg-copper/20 text-copper-light border border-copper/30"
+                      : "bg-surface text-foreground/50 border border-border hover:text-foreground/70"
+                  }`}
+                >
+                  {tag}
                 </button>
               ))}
             </div>
