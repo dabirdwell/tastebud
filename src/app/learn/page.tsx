@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
-import FlavorScienceCards from "@/components/FlavorScienceCards";
+import CurriculumHub from "@/components/CurriculumHub";
 
 export const metadata: Metadata = {
-  title: "Learn — Flavor Science — TasteBud",
+  title: "Learn — Curriculum — TasteBud",
   description:
-    "Discover the science behind flavor with 20 interactive cards covering chemistry, technique, pairing, and culture — from the Maillard reaction to regional flavor profiles.",
+    "5 modules, 15 lessons, and 25 challenges covering taste foundations, flavor combinations, cooking techniques, world cuisines, and recipe creation.",
 };
 
 export default function LearnPage() {
@@ -14,7 +14,7 @@ export default function LearnPage() {
       <Nav active="Learn" />
 
       <main className="flex-1">
-        <FlavorScienceCards />
+        <CurriculumHub />
       </main>
 
       <footer className="border-t border-border py-12 px-6">
