@@ -5,7 +5,7 @@ import { MENTORS, type Mentor } from "@/data/mentors";
 import { MENTOR_QA } from "@/data/mentorQA";
 
 const MENTOR_COLORS: Record<string, { accent: string; accentLight: string; bg: string; border: string; bubble: string; text: string }> = {
-  bourdain: {
+  bold: {
     accent: "#e53e3e",
     accentLight: "#fc8181",
     bg: "rgba(229, 62, 62, 0.08)",
@@ -13,7 +13,7 @@ const MENTOR_COLORS: Record<string, { accent: string; accentLight: string; bg: s
     bubble: "rgba(229, 62, 62, 0.12)",
     text: "#fc8181",
   },
-  pepin: {
+  classique: {
     accent: "#3182ce",
     accentLight: "#63b3ed",
     bg: "rgba(49, 130, 206, 0.08)",
@@ -21,7 +21,7 @@ const MENTOR_COLORS: Record<string, { accent: string; accentLight: string; bg: s
     bubble: "rgba(49, 130, 206, 0.12)",
     text: "#63b3ed",
   },
-  child: {
+  joy: {
     accent: "#d69e2e",
     accentLight: "#f6e05e",
     bg: "rgba(214, 158, 46, 0.08)",
@@ -30,6 +30,8 @@ const MENTOR_COLORS: Record<string, { accent: string; accentLight: string; bg: s
     text: "#f6e05e",
   },
 };
+
+const STORAGE_KEY = "tastebud-mentor";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -40,8 +42,19 @@ export default function MentorProfiles() {
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const [hydrated, setHydrated] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Hydrate selection from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const mentor = MENTORS.find((m) => m.id === saved);
+      if (mentor) setSelectedMentor(mentor);
+    }
+    setHydrated(true);
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -59,6 +72,7 @@ export default function MentorProfiles() {
     setSelectedMentor(mentor);
     setMessages([]);
     setInput("");
+    localStorage.setItem(STORAGE_KEY, mentor.id);
   };
 
   const findBestMatch = (userInput: string): string | null => {
@@ -97,11 +111,11 @@ export default function MentorProfiles() {
     const match = findBestMatch(trimmed);
 
     const fallbacks: Record<string, string> = {
-      bourdain:
+      bold:
         "That's a good question, but it's not one I can riff on right now. Try asking me about bold flavors, street food, global cuisines, or how to stop being afraid of your spice rack. The world is wide — let's explore it.",
-      pepin:
+      classique:
         "An interesting inquiry, but I must stay within my areas of expertise. Ask me about technique — knife skills, sauces, classical methods, or building flavor through proper fundamentals. The foundation is where we must begin.",
-      child:
+      joy:
         "Oh, what a wonderful thought! But I'm better at other things — ask me about getting confident in the kitchen, making vegetables exciting, flavor pairing, or why butter is always the answer. Let's have some fun!",
     };
 
@@ -127,15 +141,17 @@ export default function MentorProfiles() {
     ? MENTOR_QA.find((m) => m.mentorId === selectedMentor.id)
     : null;
 
+  if (!hydrated) return null;
+
   return (
     <section className="py-20 px-6">
       <div className="mx-auto max-w-6xl">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-          Meet Your <span className="text-copper">Cooking Mentors</span>
+          Choose Your <span className="text-copper">Cooking Mentor</span>
         </h1>
         <p className="text-center text-foreground/50 max-w-2xl mx-auto mb-16">
-          Three legendary culinary personalities, each with a unique philosophy.
-          Pick your mentor and ask them anything about cooking.
+          Three culinary personalities, each with a unique teaching style.
+          Pick your mentor — they&rsquo;ll guide you with tips on recipe pages too.
         </p>
 
         {/* Mentor profile cards */}
@@ -155,7 +171,7 @@ export default function MentorProfiles() {
                 }}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">{mentor.emoji}</span>
+                  <span className="text-4xl">{mentor.emoji}</span>
                   <div>
                     <h3
                       className="text-lg font-bold"
@@ -168,19 +184,14 @@ export default function MentorProfiles() {
                 </div>
 
                 <p
-                  className="text-sm font-medium mb-3"
+                  className="text-sm font-medium mb-2"
                   style={{ color: mc.text }}
                 >
                   {mentor.philosophy}
                 </p>
 
                 <p className="text-sm text-foreground/50 leading-relaxed mb-4">
-                  {mentor.id === "bourdain" &&
-                    "Encourages bold exploration of global cuisines and street food. Challenges comfort zones with passion and cultural storytelling. Believes the best meals tell a story about people and place."}
-                  {mentor.id === "pepin" &&
-                    "Emphasizes classical technique as the path to kitchen freedom. Patient and methodical, focused on building a rock-solid foundation. Believes mastering fundamentals unlocks infinite improvisation."}
-                  {mentor.id === "child" &&
-                    "Makes cooking joyful and fearless. Celebrates mistakes as learning, encourages experimentation, and believes enthusiasm is the most important ingredient. Butter is always the answer."}
+                  {mentor.teachingStyle}
                 </p>
 
                 <p className="text-xs italic text-foreground/30">
@@ -195,7 +206,7 @@ export default function MentorProfiles() {
                     border: isSelected ? "none" : `1px solid ${mc.border}`,
                   }}
                 >
-                  {isSelected ? "Currently chatting" : "Start chatting"}
+                  {isSelected ? "Your current mentor" : "Choose this mentor"}
                 </div>
               </button>
             );

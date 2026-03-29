@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { RECIPES, CUISINES, DIFFICULTIES, ALL_TAGS, getRecipeFlavorProfile, type Recipe } from "@/data/recipes";
 import { AXIS_CONFIG, type FlavorProfile } from "@/data/ingredients";
+import MentorSidebar from "@/components/MentorSidebar";
 
 /* ------------------------------------------------------------------ */
 /*  Radar Chart (self-contained, matches FlavorMap aesthetic)          */
@@ -356,6 +357,9 @@ function RecipeDetail({ recipe, onClose }: { recipe: Recipe; onClose: () => void
                 ))}
               </div>
             </div>
+
+            {/* Mentor sidebar guide */}
+            <MentorSidebar techniques={recipe.techniques} />
           </div>
         </div>
       </div>

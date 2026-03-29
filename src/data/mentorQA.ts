@@ -10,7 +10,7 @@ export interface MentorQA {
 
 export const MENTOR_QA: MentorQA[] = [
   {
-    mentorId: "bourdain",
+    mentorId: "bold",
     pairs: [
       {
         question: "How do I make my food more flavorful?",
@@ -50,7 +50,7 @@ export const MENTOR_QA: MentorQA[] = [
     ],
   },
   {
-    mentorId: "pepin",
+    mentorId: "classique",
     pairs: [
       {
         question: "What's the most important cooking technique to master?",
@@ -95,7 +95,7 @@ export const MENTOR_QA: MentorQA[] = [
     ],
   },
   {
-    mentorId: "child",
+    mentorId: "joy",
     pairs: [
       {
         question: "I'm afraid of ruining expensive ingredients. What should I do?",
