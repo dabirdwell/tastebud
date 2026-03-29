@@ -45,6 +45,72 @@ const FEATURES = [
   },
 ];
 
+const TIERS = [
+  {
+    name: "Free",
+    price: "$0",
+    period: "",
+    description: "Start exploring flavor science",
+    features: [
+      "Basic flavor map (3 ingredients)",
+      "Julia Child mentor only",
+      "10 recipes per month",
+      "Flavor science cards",
+    ],
+    cta: "Get Started",
+    href: "/login",
+    highlighted: false,
+  },
+  {
+    name: "Plus",
+    price: "$4.99",
+    period: "/mo",
+    description: "Unlock the full flavor library",
+    features: [
+      "Full ingredient library",
+      "All 5 AI mentors",
+      "Unlimited recipes",
+      "AR flavor features",
+      "Smart pantry & planner",
+    ],
+    cta: "Upgrade to Plus",
+    tier: "plus",
+    highlighted: false,
+  },
+  {
+    name: "Pro",
+    price: "$9.99",
+    period: "/mo",
+    description: "For serious culinary creators",
+    features: [
+      "Everything in Plus",
+      "VR cooking experiences",
+      "Custom AI mentor creation",
+      "Commercial use license",
+      "Priority support",
+    ],
+    cta: "Go Pro",
+    tier: "pro",
+    highlighted: true,
+  },
+  {
+    name: "Academy",
+    price: "$19.99",
+    period: "/mo",
+    description: "Teach flavor science at scale",
+    features: [
+      "Everything in Pro",
+      "Classroom curriculum tools",
+      "Bulk student accounts",
+      "Certification program",
+      "Admin dashboard",
+    ],
+    cta: "Start Academy",
+    tier: "academy",
+    highlighted: false,
+  },
+];
+
 const STEPS = [
   {
     number: "1",
@@ -160,6 +226,62 @@ export default function Home() {
             >
               Start Exploring
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-20 px-6 bg-surface border-y border-border">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            Choose Your <span className="text-copper">Path</span>
+          </h2>
+          <p className="text-center text-foreground/50 max-w-2xl mx-auto mb-16">
+            From casual cook to culinary educator — pick the tier that fits your journey.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TIERS.map((t) => (
+              <div
+                key={t.name}
+                className={`rounded-xl border p-8 flex flex-col ${
+                  t.highlighted
+                    ? "border-copper bg-copper/5 ring-1 ring-copper/20"
+                    : "border-border bg-background"
+                }`}
+              >
+                {t.highlighted && (
+                  <span className="text-xs font-semibold tracking-widest uppercase text-copper mb-3">
+                    Most Popular
+                  </span>
+                )}
+                <h3 className="text-xl font-bold">{t.name}</h3>
+                <div className="mt-3 mb-1">
+                  <span className="text-3xl font-bold">{t.price}</span>
+                  {t.period && (
+                    <span className="text-foreground/50 text-sm">{t.period}</span>
+                  )}
+                </div>
+                <p className="text-sm text-foreground/50 mb-6">{t.description}</p>
+                <ul className="space-y-2 mb-8 flex-1">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-foreground/70">
+                      <span className="text-copper mt-0.5">&#10003;</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={t.href || `/login?next=/checkout&tier=${t.tier}`}
+                  className={`block text-center rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
+                    t.highlighted
+                      ? "bg-copper text-background hover:bg-copper-light"
+                      : "border border-border text-foreground hover:border-copper/30 hover:text-copper"
+                  }`}
+                >
+                  {t.cta}
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
