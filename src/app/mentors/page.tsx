@@ -5,7 +5,7 @@ import MentorProfiles from "@/components/MentorProfiles";
 export const metadata: Metadata = {
   title: "Cooking Mentors — TasteBud",
   description:
-    "Choose from three AI cooking mentors — Chef Bold, Chef Classique, and Chef Joy — each with a unique teaching style. Pick your guide and get personality-driven cooking tips.",
+    "Choose from five AI cooking mentors — Julia Child, Jacques Pépin, Anthony Bourdain, Ferran Adrià, and Massimo Bottura — each with a unique teaching philosophy.",
 };
 
 export default function MentorsPage() {

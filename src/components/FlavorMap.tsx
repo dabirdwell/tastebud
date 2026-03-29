@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import Link from "next/link";
 import { AXIS_CONFIG, INGREDIENTS, type FlavorProfile } from "@/data/ingredients";
 
 const STORAGE_KEY = "tastebud-flavor-profile";
@@ -620,6 +621,21 @@ export default function FlavorMap() {
                 );
               })}
             </div>
+          </div>
+
+          {/* Ask a Mentor CTA */}
+          <div className="md:col-span-2 text-center mt-4">
+            <Link
+              href={`/chat?mentor=julia&context=${encodeURIComponent(
+                `Based on my flavor profile (sweet: ${profile.sweet}, salty: ${profile.salty}, umami: ${profile.umami}, sour: ${profile.sour}, bitter: ${profile.bitter}, spicy: ${profile.spicy}), suggest recipes that match my taste preferences.`
+              )}`}
+              className="inline-flex items-center gap-2 rounded-xl bg-copper px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-copper-light"
+            >
+              👩‍🍳 Ask a Mentor About Your Profile
+            </Link>
+            <p className="text-xs text-foreground/30 mt-2">
+              Get personalized recipe suggestions based on your flavor map
+            </p>
           </div>
         </div>
       )}
