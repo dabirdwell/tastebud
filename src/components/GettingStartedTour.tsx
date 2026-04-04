@@ -8,7 +8,7 @@ const TOUR_STEPS = [
     number: 1,
     title: "Map Your Flavor Profile",
     description:
-      "Start with the Flavor Map — drag the radar chart to discover your taste preferences across six axes.",
+      "Start with the Flavor Map — drag the radar chart to discover your taste preferences across six axes: sweet, salty, umami, sour, bitter, and spicy.",
     icon: "🗺️",
     href: "/flavor-map",
     cta: "Open Flavor Map",
@@ -17,7 +17,7 @@ const TOUR_STEPS = [
     number: 2,
     title: "Explore Global Recipes",
     description:
-      "Browse 25+ curated dishes from 10 cuisines — each with full flavor profiles and built-in cooking timers.",
+      "Browse 25+ curated dishes from 10 cuisines — each with full flavor profiles, step-by-step instructions, and built-in cooking timers.",
     icon: "📖",
     href: "/recipes",
     cta: "Browse Recipes",
@@ -26,28 +26,10 @@ const TOUR_STEPS = [
     number: 3,
     title: "Learn the Science of Taste",
     description:
-      "Dive into bite-sized flavor cards covering the Maillard reaction, umami, molecular pairing, and more.",
+      "Dive into bite-sized flavor cards and a full curriculum covering the Maillard reaction, umami, molecular pairing, and more.",
     icon: "🔬",
     href: "/learn",
-    cta: "Browse Lessons",
-  },
-  {
-    number: 4,
-    title: "Chat with a Culinary Mentor",
-    description:
-      "Ask Julia Child (or one of four other legendary chefs) anything about cooking, flavor, or technique.",
-    icon: "👩‍🍳",
-    href: "/mentors",
-    cta: "Meet the Mentors",
-  },
-  {
-    number: 5,
-    title: "Stock Your Smart Pantry",
-    description:
-      "Add ingredients you have on hand and TasteBud will suggest matching recipes with smart substitutions.",
-    icon: "🥘",
-    href: "/pantry",
-    cta: "Open Pantry",
+    cta: "Start Learning",
   },
 ];
 
