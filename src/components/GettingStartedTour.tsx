@@ -15,21 +15,39 @@ const TOUR_STEPS = [
   },
   {
     number: 2,
+    title: "Explore Global Recipes",
+    description:
+      "Browse 25+ curated dishes from 10 cuisines — each with full flavor profiles and built-in cooking timers.",
+    icon: "📖",
+    href: "/recipes",
+    cta: "Browse Recipes",
+  },
+  {
+    number: 3,
     title: "Learn the Science of Taste",
     description:
-      "Explore bite-sized flavor cards covering the Maillard reaction, umami, molecular pairing, and more.",
+      "Dive into bite-sized flavor cards covering the Maillard reaction, umami, molecular pairing, and more.",
     icon: "🔬",
     href: "/learn",
     cta: "Browse Lessons",
   },
   {
-    number: 3,
+    number: 4,
     title: "Chat with a Culinary Mentor",
     description:
       "Ask Julia Child (or one of four other legendary chefs) anything about cooking, flavor, or technique.",
     icon: "👩‍🍳",
     href: "/mentors",
     cta: "Meet the Mentors",
+  },
+  {
+    number: 5,
+    title: "Stock Your Smart Pantry",
+    description:
+      "Add ingredients you have on hand and TasteBud will suggest matching recipes with smart substitutions.",
+    icon: "🥘",
+    href: "/pantry",
+    cta: "Open Pantry",
   },
 ];
 
@@ -77,7 +95,9 @@ export default function GettingStartedTour({
               className={`h-2 rounded-full transition-all ${
                 i === step
                   ? "w-8 bg-copper"
-                  : "w-2 bg-foreground/20 hover:bg-foreground/40"
+                  : i < step
+                    ? "w-2 bg-copper/40"
+                    : "w-2 bg-foreground/20 hover:bg-foreground/40"
               }`}
               aria-label={`Go to step ${i + 1}`}
             />

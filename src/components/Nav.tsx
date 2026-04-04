@@ -27,7 +27,9 @@ export default function Nav({ active }: { active?: string }) {
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">🌱</span>
-          <span className="text-xl font-bold tracking-tight text-copper">TasteBud</span>
+          <span className="text-xl font-bold tracking-tight text-copper">
+            TasteBud
+          </span>
         </Link>
 
         {/* Desktop links */}
@@ -49,9 +51,9 @@ export default function Nav({ active }: { active?: string }) {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/profile"
+            href="/progress"
             className={`hidden sm:inline-flex rounded-full px-5 py-2 text-sm font-medium transition-colors ${
-              pathname === "/profile"
+              pathname === "/progress" || pathname === "/profile"
                 ? "bg-copper text-background"
                 : "border border-copper/40 text-copper hover:bg-copper hover:text-background"
             }`}
@@ -102,7 +104,7 @@ export default function Nav({ active }: { active?: string }) {
             </Link>
           ))}
           <Link
-            href="/profile"
+            href="/progress"
             onClick={() => setMenuOpen(false)}
             className="block mt-3 text-center rounded-full bg-copper px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-copper-light"
           >
