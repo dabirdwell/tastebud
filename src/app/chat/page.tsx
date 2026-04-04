@@ -111,7 +111,7 @@ function ChatContent() {
 export default function ChatPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Nav />
+      <Nav active="Mentors" />
 
       <main className="flex-1 py-12 px-6">
         <div className="mx-auto max-w-5xl">

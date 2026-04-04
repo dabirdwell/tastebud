@@ -1,15 +1,20 @@
-"use client";
-
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
-import FlavorMap from "@/components/FlavorMap";
+import ProfileDashboard from "@/components/ProfileDashboard";
 
-export default function FlavorMapPage() {
+export const metadata: Metadata = {
+  title: "My Progress — TasteBud",
+  description:
+    "Track your culinary education journey — recipes explored, flavor cards studied, mentor conversations, and more.",
+};
+
+export default function ProfilePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Nav active="Flavor Map" />
+      <Nav active="Profile" />
 
       <main className="flex-1">
-        <FlavorMap />
+        <ProfileDashboard />
       </main>
 
       <footer className="border-t border-border py-12 px-6">
