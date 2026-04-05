@@ -4,6 +4,9 @@ import { useState, useMemo } from "react";
 import { RECIPES, CUISINES, DIFFICULTIES, ALL_TAGS, getRecipeFlavorProfile, type Recipe } from "@/data/recipes";
 import { AXIS_CONFIG, type FlavorProfile } from "@/data/ingredients";
 import MentorSidebar from "@/components/MentorSidebar";
+import { useSubscription } from "@/hooks/useSubscription";
+
+const FREE_RECIPE_LIMIT = 3;
 
 /* ------------------------------------------------------------------ */
 /*  Radar Chart (self-contained, matches FlavorMap aesthetic)          */
@@ -429,6 +432,7 @@ export default function RecipeExplorer() {
   const [selectedTimeIdx, setSelectedTimeIdx] = useState(0);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [activeRecipe, setActiveRecipe] = useState<Recipe | null>(null);
+  const { hasAccess, startCheckout } = useSubscription();
 
   const filtered = useMemo(() => {
     const maxTime = TIME_FILTERS[selectedTimeIdx].max;
@@ -577,9 +581,30 @@ export default function RecipeExplorer() {
         {/* Grid */}
         {filtered.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2">
-            {filtered.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} onClick={() => setActiveRecipe(recipe)} />
-            ))}
+            {filtered.map((recipe, idx) => {
+              const locked = !hasAccess("plus") && idx >= FREE_RECIPE_LIMIT;
+              return (
+                <div key={recipe.id} className="relative">
+                  <RecipeCard
+                    recipe={recipe}
+                    onClick={() => {
+                      if (locked) {
+                        startCheckout("plus");
+                      } else {
+                        setActiveRecipe(recipe);
+                      }
+                    }}
+                  />
+                  {locked && (
+                    <div className="absolute inset-0 rounded-xl bg-background/60 backdrop-blur-[2px] flex items-center justify-center">
+                      <span className="text-xs font-medium text-copper bg-copper/10 border border-copper/20 px-3 py-1.5 rounded-full">
+                        Upgrade to Plus
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-20 text-foreground/30 text-sm">

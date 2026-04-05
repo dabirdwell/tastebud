@@ -1,19 +1,33 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PLUS_ROUTES = ["/mentors", "/planner", "/pantry", "/shopping"];
-const PRO_ROUTES = ["/vr-experiences", "/custom-mentor"];
-const ACADEMY_ROUTES = ["/academy"];
+type Tier = "free" | "plus" | "pro" | "academy";
+
+const TIER_RANK: Record<Tier, number> = {
+  free: 0,
+  plus: 1,
+  pro: 2,
+  academy: 3,
+};
+
+const ROUTE_TIERS: { routes: string[]; required: Tier }[] = [
+  { routes: ["/mentors", "/planner", "/pantry", "/shopping"], required: "plus" },
+  { routes: ["/curriculum", "/challenges"], required: "pro" },
+  { routes: ["/academy", "/coaching"], required: "academy" },
+];
+
+function requiredTierForPath(pathname: string): Tier | null {
+  for (const { routes, required } of ROUTE_TIERS) {
+    if (routes.some((r) => pathname.startsWith(r))) return required;
+  }
+  return null;
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only gate paid-tier routes
-  const isPlusRoute = PLUS_ROUTES.some((r) => pathname.startsWith(r));
-  const isProRoute = PRO_ROUTES.some((r) => pathname.startsWith(r));
-  const isAcademyRoute = ACADEMY_ROUTES.some((r) => pathname.startsWith(r));
-
-  if (!isPlusRoute && !isProRoute && !isAcademyRoute) {
+  const requiredTier = requiredTierForPath(pathname);
+  if (!requiredTier) {
     return NextResponse.next();
   }
 
@@ -50,6 +64,22 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Check subscription tier from profiles table
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("subscription_tier")
+    .eq("id", user.id)
+    .single();
+
+  const userTier: Tier = (profile?.subscription_tier as Tier) || "free";
+
+  if (TIER_RANK[userTier] < TIER_RANK[requiredTier]) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    url.searchParams.set("upgrade", requiredTier);
+    return NextResponse.redirect(url);
+  }
+
   return supabaseResponse;
 }
 
@@ -59,8 +89,9 @@ export const config = {
     "/planner/:path*",
     "/pantry/:path*",
     "/shopping/:path*",
-    "/vr-experiences/:path*",
-    "/custom-mentor/:path*",
+    "/curriculum/:path*",
+    "/challenges/:path*",
     "/academy/:path*",
+    "/coaching/:path*",
   ],
 };

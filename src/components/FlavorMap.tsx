@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import { AXIS_CONFIG, INGREDIENTS, type FlavorProfile } from "@/data/ingredients";
+import { useSubscription } from "@/hooks/useSubscription";
 
 const STORAGE_KEY = "tastebud-flavor-profile";
 const SCALE_MAX = 10;
@@ -428,6 +429,7 @@ function InteractiveRadar({
 // --- Main component ---
 
 export default function FlavorMap() {
+  const { hasAccess } = useSubscription();
   const [profile, setProfile] = useState<FlavorProfile>({
     sweet: 0,
     salty: 0,
@@ -474,7 +476,8 @@ export default function FlavorMap() {
 
   const hasValues = AXIS_CONFIG.some((a) => profile[a.key] > 0);
   const cuisines = hasValues ? matchCuisines(profile, 3) : [];
-  const ingredients = hasValues ? matchIngredients(profile, 3) : [];
+  const ingredientLimit = hasAccess("plus") ? 10 : 3;
+  const ingredients = hasValues ? matchIngredients(profile, ingredientLimit) : [];
 
   // Avoid hydration mismatch by not rendering suggestions until loaded
   if (!loaded) {

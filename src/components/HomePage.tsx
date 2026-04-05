@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useProgress, type UserProgress } from "@/lib/useProgress";
+import { useSubscription } from "@/hooks/useSubscription";
 import GettingStartedTour from "./GettingStartedTour";
 
 interface FeatureCard {
@@ -113,10 +114,10 @@ const TIERS = [
     period: "",
     description: "Start exploring flavor science",
     features: [
-      "Basic flavor map (3 ingredients)",
+      "Flavor Map (3 ingredients)",
+      "3 recipes to explore",
+      "Basic flavor science cards",
       "Julia Child mentor only",
-      "10 recipes per month",
-      "Flavor science cards",
     ],
     cta: "Get Started",
     href: "/login",
@@ -128,11 +129,11 @@ const TIERS = [
     period: "/mo",
     description: "Unlock the full flavor library",
     features: [
-      "Full ingredient library",
+      "All 25+ recipes",
       "All 5 AI mentors",
-      "Unlimited recipes",
-      "AR flavor features",
-      "Smart pantry & planner",
+      "Smart pantry & meal planner",
+      "Shopping list generator",
+      "Full ingredient library",
     ],
     cta: "Upgrade to Plus",
     tier: "plus",
@@ -142,13 +143,13 @@ const TIERS = [
     name: "Pro",
     price: "$9.99",
     period: "/mo",
-    description: "For serious culinary creators",
+    description: "Master flavor through structured learning",
     features: [
       "Everything in Plus",
-      "VR cooking experiences",
-      "Custom AI mentor creation",
-      "Commercial use license",
-      "Priority support",
+      "Full curriculum (5 modules, 30+ lessons)",
+      "5 challenge types",
+      "Rank progression (Seed \u2192 Master)",
+      "Rank tests & capstones",
     ],
     cta: "Go Pro",
     tier: "pro",
@@ -158,13 +159,13 @@ const TIERS = [
     name: "Academy",
     price: "$19.99",
     period: "/mo",
-    description: "Teach flavor science at scale",
+    description: "1-on-1 AI coaching & custom paths",
     features: [
       "Everything in Pro",
-      "Classroom curriculum tools",
-      "Bulk student accounts",
+      "1-on-1 AI coaching sessions",
+      "Custom curricula builder",
+      "Classroom tools & bulk accounts",
       "Certification program",
-      "Admin dashboard",
     ],
     cta: "Start Academy",
     tier: "academy",
@@ -186,6 +187,7 @@ function MiniProgressBar({ value, max }: { value: number; max: number }) {
 
 export default function HomePage() {
   const { progress, loaded, setTourCompleted } = useProgress();
+  const { tier, hasAccess, startCheckout } = useSubscription();
 
   const showTour = loaded && !progress.tourCompleted;
 
@@ -474,16 +476,28 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={t.href || `/login?next=/checkout&tier=${t.tier}`}
-                  className={`block text-center rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
-                    t.highlighted
-                      ? "bg-copper text-background hover:bg-copper-light"
-                      : "border border-border text-foreground hover:border-copper/30 hover:text-copper"
-                  }`}
-                >
-                  {t.cta}
-                </a>
+                {t.tier && hasAccess(t.tier as "plus" | "pro" | "academy") ? (
+                  <span className="block text-center rounded-full px-6 py-2.5 text-sm font-semibold bg-copper/10 text-copper border border-copper/20">
+                    Current Plan
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => {
+                      if (t.href) {
+                        window.location.href = t.href;
+                      } else if (t.tier) {
+                        startCheckout(t.tier as "plus" | "pro" | "academy");
+                      }
+                    }}
+                    className={`block w-full text-center rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
+                      t.highlighted
+                        ? "bg-copper text-background hover:bg-copper-light"
+                        : "border border-border text-foreground hover:border-copper/30 hover:text-copper"
+                    }`}
+                  >
+                    {t.cta}
+                  </button>
+                )}
               </div>
             ))}
           </div>

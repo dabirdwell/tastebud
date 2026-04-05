@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { MENTORS, type MentorProfile } from "@/data/mentors";
+import { useSubscription, type SubscriptionTier } from "@/hooks/useSubscription";
 import Link from "next/link";
 
 const TIER_LABELS: Record<string, { label: string; color: string }> = {
@@ -16,6 +17,7 @@ const STORAGE_KEY = "tastebud-mentor";
 export default function MentorProfiles() {
   const [selectedMentor, setSelectedMentor] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const { hasAccess, startCheckout } = useSubscription();
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -24,6 +26,7 @@ export default function MentorProfiles() {
   }, []);
 
   const selectMentor = (mentor: MentorProfile) => {
+    if (!hasAccess(mentor.tier as SubscriptionTier)) return;
     setSelectedMentor(mentor.id);
     localStorage.setItem(STORAGE_KEY, mentor.id);
   };
@@ -46,13 +49,19 @@ export default function MentorProfiles() {
           {MENTORS.map((mentor) => {
             const isSelected = selectedMentor === mentor.id;
             const tierInfo = TIER_LABELS[mentor.tier];
-            const isLocked = mentor.tier !== "free";
+            const isLocked = !hasAccess(mentor.tier as SubscriptionTier);
 
             return (
               <button
                 key={mentor.id}
-                onClick={() => selectMentor(mentor)}
-                className="text-left rounded-2xl border p-6 transition-all duration-300 group relative"
+                onClick={() => {
+                  if (isLocked) {
+                    startCheckout(mentor.tier as "plus" | "pro" | "academy");
+                    return;
+                  }
+                  selectMentor(mentor);
+                }}
+                className={`text-left rounded-2xl border p-6 transition-all duration-300 group relative ${isLocked ? "opacity-60" : ""}`}
                 style={{
                   borderColor: isSelected
                     ? "var(--copper)"
@@ -126,7 +135,7 @@ export default function MentorProfiles() {
                       : "1px solid rgba(184, 115, 51, 0.3)",
                   }}
                 >
-                  {isSelected ? "✓ Selected" : isLocked ? `Requires ${tierInfo.label}` : "Select mentor"}
+                  {isSelected ? "✓ Selected" : isLocked ? `Upgrade to ${tierInfo.label}` : "Select mentor"}
                 </div>
               </button>
             );
