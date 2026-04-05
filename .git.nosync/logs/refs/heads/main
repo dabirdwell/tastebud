@@ -1,9 +1,0 @@
-0000000000000000000000000000000000000000 e89014cd92e4240f4a5bec599de5d96c764a7c99 David <david@mac.gpn.globalpay.com> 1774293626 -0500	clone: from https://github.com/dabirdwell/tastebud.git
-e89014cd92e4240f4a5bec599de5d96c764a7c99 43057ac70376e74dfa3a616322ca73191ec985d6 David <david@mac.gpn.globalpay.com> 1774379558 -0500	commit: content: 15 recipes, flavor science cards, smart pantry suggestions, responsive polish
-43057ac70376e74dfa3a616322ca73191ec985d6 b40d02d2801b4fb4557960044beff9b6ea59d2ef David Birdwell <davidbirdwell@gmail.com> 1774379558 -0500	filter-branch: rewrite
-b40d02d2801b4fb4557960044beff9b6ea59d2ef d137278d8b0f1e931c700c15d42963e53eb2afdc David Birdwell <davidbirdwell@gmail.com> 1774581943 -0500	commit: feat: meal planner, shopping list, Vercel config, README update
-d137278d8b0f1e931c700c15d42963e53eb2afdc 5f6d0338af475d95fdfd35b6c948f1ae06bc4ad1 David Birdwell <davidbirdwell@gmail.com> 1774581965 -0500	pull --rebase origin main (finish): refs/heads/main onto 5f6d0338af475d95fdfd35b6c948f1ae06bc4ad1
-5f6d0338af475d95fdfd35b6c948f1ae06bc4ad1 b89176bd7b7da50984d8f4419b1487fbf9a62f08 David Birdwell <davidbirdwell@gmail.com> 1774661092 -0500	commit: Add multi-timer cooking component
-b89176bd7b7da50984d8f4419b1487fbf9a62f08 5a20b771eed1be5f24ebaead79dc02c2cf7a5a90 David Birdwell <davidbirdwell@gmail.com> 1774661498 -0500	commit: Add seasonal ingredient calendar
-5a20b771eed1be5f24ebaead79dc02c2cf7a5a90 4e9d54f42049d11b7e641cea866b3400a2017dd4 David Birdwell <davidbirdwell@gmail.com> 1774667191 -0500	commit: Add 20 flavor science educational cards
-4e9d54f42049d11b7e641cea866b3400a2017dd4 c18932383aa78be43227c244e1be47e8044f8ce5 David Birdwell <davidbirdwell@gmail.com> 1774670202 -0500	commit: Complete FlavorMap: interactive radar with cuisine matching
